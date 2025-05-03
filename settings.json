@@ -1,0 +1,127 @@
+{
+    "AU" : 1.5e2,
+    "orbitSpeedMult" : 5e5,
+    "rotationSpeedMult" : 1e-4,
+    "scaleMult" : 2,
+
+    "sun" : {
+        "name" : "Sun",
+        "modelDir" : "assets\\models\\sun.glb",
+        "color": [255,255,0],
+        "bodyRadius": 15,
+        "orbitRadius" : 0,
+        "orbitSpeed" : 0,
+        "rotationSpeed" : 25,
+        "satellites" : {
+            "mercury" : {
+                "name" : "Mercury",
+                "modelDir" : "assets\\models\\mercury.glb",
+                "color" : [160,160,160],
+                "bodyRadius" : 2,
+                "orbitRadius" : 0.39,
+                "orbitSpeed" : 8.264E-07,
+                "rotationSpeed" : 58.8,
+                "info" : {
+                    "title" : "JavaScript",
+                    "subtitle" : "Mercury",
+                    "description" : ""
+                },
+                "satellites" : {
+                    "sat_1" : {
+                        "name" : "sat_1",
+                        "modelDir" : "assets\\models\\satellites\\sat_1.glb",
+
+                        "color" : [160,160,160],
+
+                        "scale": 0.05,
+
+                        "bodyRadius" : 0.1,
+                        "orbitRadius" : 0.03,
+                        "orbitSpeed" : 4E-07,
+
+                        "rotationSpeed" : 0,
+                        "faceParent" : true,
+
+                        "satellites" : {}
+                    }
+                }
+            },
+
+            "venus" : {
+                "name" : "Venus",
+                "modelDir" : "assets\\models\\venus.glb",
+                "color" : [255,153,51],
+                "bodyRadius" : 2,
+                "orbitRadius" : 0.72,
+                "orbitSpeed" : 3.232E-07,
+                "rotationSpeed" : -244,
+                "info" : {
+                    "title" : "Java",
+                    "subtitle" : "Venus",
+                    "description" : ""
+                },
+                "satellites" : {
+                    
+                }
+            },
+            "earth" : {
+                "name" : "Earth",
+                "modelDir" : "assets\\models\\earth.glb",
+                "color" : [0,128,255],
+                "bodyRadius" : 2,
+                "orbitRadius" : 1.00,
+                "orbitSpeed" : 1.992E-07,
+                "rotationSpeed" : 1,
+                "info" : {
+                    "title" : "Python",
+                    "subtitle" : "Earth",
+                    "description" : ""
+                },
+                "satellites" : {
+                    "sputnik" : {
+                        "name" : "Sputnik",
+                        "modelDir" : "assets\\models\\satellites\\sputnik.glb",
+                        "color" : [160,160,160],
+                        "bodyRadius" : 0.1,
+                        "orbitRadius" : 0.05,
+                        "orbitSpeed" : 4E-07,
+                        "rotationSpeed" : -20,
+                        "faceParent" : true,
+                        "satellites" : {}
+                    },
+                    "sat_2" : {
+                        "name" : "sat_2",
+                        "modelDir" : "assets\\models\\satellites\\rocket.glb",
+                        "color" : [160,160,160],
+                        "bodyRadius" : 0.3,
+                        "orbitRadius" : 0.1,
+                        "orbitSpeed" : 2E-07,
+                        "rotationSpeed" : -20,
+                        "faceParent" : true,
+                        "scale" : 0.05,
+                        "satellites" : {}
+                    }
+                    
+                }
+            },
+
+            "mars" : {
+                "name" : "Mars",
+                "modelDir" : "assets\\models\\mars.glb",
+                "color" : [193,68,14],
+                "bodyRadius" : 2,
+                "orbitRadius" : 1.88,
+                "orbitSpeed" : 1.059E-07,
+                "rotationSpeed" : 1.03,
+                "info" : {
+                    "title" : "C#",
+                    "subtitle" : "Mars",
+                    "description" : ""
+                },
+                "satellites" : {
+                    
+                }
+            }
+        }
+    }
+}
