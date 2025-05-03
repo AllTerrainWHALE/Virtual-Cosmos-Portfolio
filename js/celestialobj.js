@@ -1,6 +1,6 @@
 // const Astronomy = require('astronomyjs')  // Install astronomyjs via npm
 
-const settings = await fetch('settings.json')
+const settings = await fetch('./json/settings.json')
   .then(response => response.json()) // Parse JSON
   .catch(error => console.error('Error fetching JSON:', error))
 

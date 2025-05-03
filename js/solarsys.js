@@ -9,7 +9,7 @@ var sun, mercury, venus, earth, mars
 var followedObject = sun, hoveredObject = null
 var prevObjectPosition = new THREE.Vector3()
 
-const settings = await fetch('settings.json')
+const settings = await fetch('./json/settings.json')
   .then(response => response.json()) // Parse JSON
   .catch(error => console.error('Error fetching JSON:', error))
 
