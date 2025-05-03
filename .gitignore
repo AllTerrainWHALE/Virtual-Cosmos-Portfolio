@@ -166,9 +166,7 @@ cython_debug/
 **/*backup*
 *.zip
 
-assets/fonts/
 assets/images/
-**/*bootstrap*
 css/stylesheet.css
 planets/
 
