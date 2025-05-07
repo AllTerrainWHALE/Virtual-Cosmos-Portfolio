@@ -80,6 +80,10 @@ class CelestialObj {
                         texture.generateMipmaps = false
                         texture.minFilter = THREE.LinearFilter
                     }
+                    // child.material.depthWrite = true;
+                    // child.material.polygonOffset = true;
+                    // child.material.polygonOffsetFactor = 1;
+                    // child.material.polygonOffsetUnits = 1;
                 }
             })
 
@@ -119,6 +123,7 @@ class CelestialObj {
         this.hitbox.position.set(this.orbitRadius, 0, 0)
 
         this.hitbox.userData.object = this
+        this.sphere.userData.isHitbox = true
 
         // Create 2D circle
         const canvas = document.createElement('canvas')
@@ -183,6 +188,28 @@ class CelestialObj {
         });
 
         this.played = !reverse
+    }
+
+    toggleWireframe(enabled) {
+        this.sphere.traverse(child => {
+            if (child.isMesh && !child.userData?.isHitbox) {
+                // Clone material if we haven't already
+                if (!child.userData.originalMaterial) {
+                    child.userData.originalMaterial = child.material;
+                }
+                
+                if (enabled) {
+                    // Create wireframe version
+                    child.material = new THREE.MeshBasicMaterial({
+                        wireframe: true,
+                        color: 0x555555,
+                    });
+                } else {
+                    // Restore original material
+                    child.material = child.userData.originalMaterial;
+                }
+            }
+        });
     }
 
     update(dt=1) {

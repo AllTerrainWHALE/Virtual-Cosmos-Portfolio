@@ -165,8 +165,9 @@ cython_debug/
 .vscode/
 **/*backup*
 *.zip
+*.txt
 
-assets/images/
+assets/images/unused/
 css/stylesheet.css
 planets/
 

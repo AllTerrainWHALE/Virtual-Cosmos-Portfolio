@@ -35,7 +35,7 @@
 
                         "scale": 0.05,
 
-                        "bodyRadius" : 0.1,
+                        "bodyRadius" : 0.2,
                         "orbitRadius" : 0.03,
                         "orbitSpeed" : 4E-07,
 
@@ -82,7 +82,7 @@
                         "name" : "Sputnik",
                         "modelDir" : "assets\\models\\satellites\\sputnik.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.1,
+                        "bodyRadius" : 0.2,
                         "orbitRadius" : 0.05,
                         "orbitSpeed" : 4E-07,
                         "rotationSpeed" : -20,
@@ -91,14 +91,19 @@
                     },
                     "sat_2" : {
                         "name" : "sat_2",
-                        "modelDir" : "assets\\models\\satellites\\rocket.glb",
+                        "modelDir" : "assets\\models\\satellites\\sat_2.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.3,
+                        "bodyRadius" : 0.2,
                         "orbitRadius" : 0.1,
                         "orbitSpeed" : 2E-07,
                         "rotationSpeed" : -20,
                         "faceParent" : true,
                         "scale" : 0.05,
+                        "info" : {
+                            "title" : "ACS Network Generator",
+                            "subtitle" : "Using the behaviours of ants to simulate network generation",
+                            "description" : "As my chosen project for my final year dissertation, I created my own model for an multi-agent ant simulation. The purpose of this model was to allow the ants to generate a chain of pheromone paths that connect mutiple food sources together for foraging, instead of conventional solutions where only one food source can be foraged at a time."
+                        },
                         "satellites" : {}
                     }
                     
@@ -119,7 +124,23 @@
                     "description" : ""
                 },
                 "satellites" : {
-                    
+                    "sat_3" : {
+                        "name" : "sat_3",
+                        "modelDir" : "assets\\models\\satellites\\sat_3.glb",
+                        "color" : [160,160,160],
+                        "bodyRadius" : 0.2,
+                        "orbitRadius" : 0.03,
+                        "orbitSpeed" : 2E-07,
+                        "rotationSpeed" : -20,
+                        "faceParent" : true,
+                        "scale" : 0.05,
+                        "info" : {
+                            "title" : "WHAL-Int",
+                            "subtitle" : "Egg Inc, API scraper",
+                            "description" : "This project was in colaboration with a community friend.<br>The purpose was to generate a leaderboard, formatted for Discord, to show leading coops in the game. The program fetches the games API, then proceeds to find the contract details before fetching coop data for specified coop names. With all that information, the program was able to generate a Discord formatted leaderboard message"
+                        },
+                        "satellites" : {}
+                    }                    
                 }
             }
         }

@@ -1,10 +1,11 @@
 import CelestialObj from './celestialobj.js'
 
 var scene, camera, renderer, clock, controls
-var mixer, actions=[], mode
 
-var objects=[], planets=[], satellites=[]
-var sun, mercury, venus, earth, mars
+var tapCount = 0, tapTimeout = null
+
+var objects=[]
+var sun
 
 var followedObject = sun, hoveredObject = null
 var prevObjectPosition = new THREE.Vector3()
@@ -29,7 +30,25 @@ const followedInfoTitle = followedInfoBox.querySelector('.info-title')
 const followedInfoSubTitle = followedInfoBox.querySelector('.info-subtitle')
 const followedInfoDescription = followedInfoBox.querySelector('.info-description')
 const followedInfoAnimateBtn = followedInfoBox.querySelector('.info-button')
+const followedInfoBackBtn = followedInfoBox.querySelector('.back-button')
 
+// Settings menu control
+const settingsToggle = document.getElementById('settings-toggle')
+const settingsBox = document.getElementById('settings')
+    let settingAmbientLight = sessionStorage.getItem('ambientLight') || 3;
+    const settingAmbientValue = document.getElementById('ambient-value')
+        settingAmbientValue.textContent = settingAmbientLight
+    const settingAmbientSlider = document.getElementById('ambient-slider')
+        settingAmbientSlider.value = settingAmbientLight
+
+
+    let settingPointLight = sessionStorage.getItem('pointLight') || 2;
+    const settingPointValue = document.getElementById('point-value')
+        settingPointValue.textContent = settingPointLight
+    const settingPointSlider = document.getElementById('point-slider')
+        settingPointSlider.value = settingPointLight
+
+const wireframeToggle = document.getElementById('wireframe-toggle');
 
 init()
 
@@ -47,16 +66,19 @@ async function init() {
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100000)
 
     // Add lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 3)
+    const ambientLight = new THREE.AmbientLight(0x404040, settingAmbientLight)
     scene.add(ambientLight)
 
-    const directionalLight = new THREE.PointLight(0xffcc00, 2)
-    directionalLight.position.set(0,0,0)
-    scene.add(directionalLight)
+    const pointLight = new THREE.PointLight(0xffcc00, settingPointLight)
+    pointLight.position.set(0,0,0)
+    scene.add(pointLight)
 
     // Set up renderer
     renderer = new THREE.WebGLRenderer()
     renderer.setSize(window.innerWidth, window.innerHeight)
+    // renderer.domElement.style.position = 'fixed';
+    // renderer.domElement.style.top = '0';
+    // renderer.domElement.style.left = '0';
     document.body.appendChild(renderer.domElement)
 
     // Initialize sun
@@ -74,9 +96,9 @@ async function init() {
 
     // Set camera position
     camera.position.set(
-        1.3*followedObject.bodyRadius**2+5,
-        1.3*followedObject.bodyRadius**2+5,
-        1.3*followedObject.bodyRadius**2+5
+        1.3*followedObject.bodyRadius**2+50000,
+        1.3*followedObject.bodyRadius**2+50000,
+        1.3*followedObject.bodyRadius**2+50000
     )
 
     // Add orbit controls
@@ -84,13 +106,14 @@ async function init() {
     controls.target.copy(followedObject.sphere.position)
     controls.update()
 
-    window.navigation.addEventListener("navigate", updateFocusFromUrl)
+    window.addEventListener("popstate", updateFocusFromUrl)
 
     window.addEventListener('resize', onResize, false)
 
     renderer.domElement.addEventListener('click', onObjectClick);
     renderer.domElement.addEventListener('dblclick', onObjectDblClick, false);
     renderer.domElement.addEventListener('mousemove', onMouseMove);
+    renderer.domElement.addEventListener('touchend', (e) => onTap(e), false);
 
     followedInfoAnimateBtn.addEventListener('click', () => {
         followedObject.playAnimation(followedObject.played)
@@ -125,9 +148,36 @@ async function init() {
             zoomToObject(followedObject.parent)
         }
     })
+    followedInfoBackBtn.addEventListener('click', () => zoomToObject(followedObject.parent))
 
-    updateFollowedInfo()
+    settingsToggle.addEventListener('click', () => {
+        settingsBox.classList.toggle('visible')
+        settingsToggle.classList.toggle('active')
+    })
+    
+    settingAmbientSlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value)
+        ambientLight.intensity = value
+        settingAmbientValue.textContent = value.toFixed(1)
+        sessionStorage.setItem('ambientLight', value)
+      })
+
+    settingPointSlider.addEventListener('input', (e) => {
+        const value = parseFloat(e.target.value)
+        pointLight.intensity = value
+        settingPointValue.textContent = value.toFixed(1)
+        sessionStorage.setItem('pointLight', value)
+    })
+
+    wireframeToggle.addEventListener('change', (e) => {
+        objects.forEach(obj => {
+            obj.toggleWireframe(e.target.checked);
+        });
+    });
+
+    // updateFollowedInfo()
     update()
+    zoomToObject(followedObject)
 }
 
 
@@ -211,6 +261,34 @@ function onObjectClick(event) {
     }
 }
 
+function onTap(event) {
+    event.preventDefault(); // Prevent default to avoid delayed click event
+
+    tapCount++;
+    
+    const touch = event.changedTouches[0];
+    // Create a pseudo event with mouse-like coordinates
+    const pseudoEvent = {
+        clientX: touch.clientX,
+        clientY: touch.clientY,
+        detail: tapCount,
+        preventDefault: () => {} // Add dummy function to avoid errors
+    };
+    
+    if (tapCount === 1) {
+        // Wait for potential double tap
+        tapTimeout = setTimeout(() => {
+            onMouseMove(pseudoEvent)
+            onObjectClick(pseudoEvent); // Single tap action
+            tapCount = 0;
+        }, 300);
+    } else if (tapCount === 2) {
+        clearTimeout(tapTimeout); // Cancel single tap timeout
+        onObjectDblClick(pseudoEvent); // Double tap action
+        tapCount = 0;
+    }
+}
+
 function onObjectDblClick(event) {
     var rect = renderer.domElement.getBoundingClientRect()
     const mouse = new THREE.Vector2(
@@ -263,18 +341,8 @@ function onMouseMove(event) {
                 // Update info box content
                 hoverInfoTitle.textContent = hoveredObject.info.title
                 hoverInfoSubTitle.textContent = hoveredObject.info.subtitle
-                hoverInfoDescription.textContent = hoveredObject.info.description
+                // hoverInfoDescription.innerHTML = hoveredObject.info.description
                 hoverInfoBox.value = hoveredObject
-                
-                // Get screen position
-                const vector = hoveredObject.sphere.position.clone()
-                vector.project(camera)
-                const x = (vector.x * 0.5 + 0.5) * window.innerWidth
-                const y = (vector.y * -0.5 + 0.5) * window.innerHeight
-                
-                // Position info box
-                hoverInfoBox.style.left = `${x}px`
-                hoverInfoBox.style.top = `${y}px`
                 hoverInfoBox.classList.add('visible')
 
                 break
@@ -342,7 +410,7 @@ function updateFollowedInfo() {
     if (followedObject && followedObject !== sun) {
         followedInfoTitle.textContent = followedObject.info.title
         followedInfoSubTitle.textContent = followedObject.info.subtitle
-        followedInfoDescription.textContent = followedObject.info.description
+        followedInfoDescription.innerHTML = followedObject.info.description
         followedInfoBox.classList.add('visible')
         if (followedObject.animations.length) 
             followedInfoAnimateBtn.classList.add('visible')
