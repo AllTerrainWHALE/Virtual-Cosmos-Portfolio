@@ -12,7 +12,7 @@ const scaleMult = settings.scaleMult
 
 class CelestialObj {
     constructor(
-        id, parent, camera, settings //name, color, bodyRadius, orbitRadius, orbitSpeed=0.1,
+        id, parent, camera, settings
     ) {
         // console.log(settings)
         this.id = id
@@ -39,12 +39,12 @@ class CelestialObj {
             title: settings.info?.title || this.name,
             subtitle: settings.info?.subtitle || null,
             description: settings.info?.description || null
-          };
+          }
 
-        this.mixer = null;
-        this.animations = [];
-        this.currentAction = null;
-        this.isFocused = false;
+        this.mixer = null
+        this.animations = []
+        this.currentAction = null
+        this.isFocused = false
         this.played = false
 
         // this.build()
@@ -63,13 +63,13 @@ class CelestialObj {
             
             // Set up animations
             if (gltf.animations && gltf.animations.length) {
-                this.mixer = new THREE.AnimationMixer(this.sphere);
+                this.mixer = new THREE.AnimationMixer(this.sphere)
                 gltf.animations.map(clip => {
-                    const action = this.mixer.clipAction(clip);
+                    const action = this.mixer.clipAction(clip)
                     action.clampWhenFinished = true
                     action.setLoop(THREE.LoopOnce)
                     this.animations.push(action)
-                });
+                })
             }
         
             // Traverse the loaded model and adjust texture filtering
@@ -80,10 +80,6 @@ class CelestialObj {
                         texture.generateMipmaps = false
                         texture.minFilter = THREE.LinearFilter
                     }
-                    // child.material.depthWrite = true;
-                    // child.material.polygonOffset = true;
-                    // child.material.polygonOffsetFactor = 1;
-                    // child.material.polygonOffsetUnits = 1;
                 }
             })
 
@@ -175,17 +171,17 @@ class CelestialObj {
     }
 
     playAnimation(reverse = false) {
-        if (!this.animations.length) return;
+        if (!this.animations.length) return
         
         if (this.currentAction) {
-            this.currentAction.stop();
+            this.currentAction.stop()
         }
         
         this.animations.forEach(action => {
-            action.paused = false;
-            action.timeScale = reverse ? -1 : 1;
-            action.play();
-        });
+            action.paused = false
+            action.timeScale = reverse ? -1 : 1
+            action.play()
+        })
 
         this.played = !reverse
     }
@@ -193,9 +189,9 @@ class CelestialObj {
     toggleWireframe(enabled) {
         this.sphere.traverse(child => {
             if (child.isMesh && !child.userData?.isHitbox) {
-                // Clone material if we haven't already
+                // Clone material if one hasn't been made already
                 if (!child.userData.originalMaterial) {
-                    child.userData.originalMaterial = child.material;
+                    child.userData.originalMaterial = child.material
                 }
                 
                 if (enabled) {
@@ -203,13 +199,13 @@ class CelestialObj {
                     child.material = new THREE.MeshBasicMaterial({
                         wireframe: true,
                         color: 0x555555,
-                    });
+                    })
                 } else {
                     // Restore original material
-                    child.material = child.userData.originalMaterial;
+                    child.material = child.userData.originalMaterial
                 }
             }
-        });
+        })
     }
 
     update(dt=1) {
@@ -231,20 +227,20 @@ class CelestialObj {
 
         // Keep circle aligned with camera
         if (this.circle.visible) {
-            this.circle.quaternion.copy(this.camera.quaternion);
+            this.circle.quaternion.copy(this.camera.quaternion)
         }
     }
 
     static async create(id, parent, camera, settings) {
-      const instance = new CelestialObj(id, parent, camera, settings);
-      await instance.build();
-      await instance.buildSatellites(settings.satellites);
-      return instance;
+      const instance = new CelestialObj(id, parent, camera, settings)
+      await instance.build()
+      await instance.buildSatellites(settings.satellites)
+      return instance
     }
 }
 
 export default CelestialObj
 
 function isPowerOfTwo(value) {
-    return (value & (value - 1)) === 0;
+    return (value & (value - 1)) === 0
 }

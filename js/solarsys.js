@@ -35,20 +35,20 @@ const followedInfoBackBtn = followedInfoBox.querySelector('.back-button')
 // Settings menu control
 const settingsToggle = document.getElementById('settings-toggle')
 const settingsBox = document.getElementById('settings')
-    let settingAmbientLight = sessionStorage.getItem('ambientLight') || 3;
+    let settingAmbientLight = sessionStorage.getItem('ambientLight') || 3
     const settingAmbientValue = document.getElementById('ambient-value')
         settingAmbientValue.textContent = settingAmbientLight
     const settingAmbientSlider = document.getElementById('ambient-slider')
         settingAmbientSlider.value = settingAmbientLight
 
 
-    let settingPointLight = sessionStorage.getItem('pointLight') || 2;
+    let settingPointLight = sessionStorage.getItem('pointLight') || 2
     const settingPointValue = document.getElementById('point-value')
         settingPointValue.textContent = settingPointLight
     const settingPointSlider = document.getElementById('point-slider')
         settingPointSlider.value = settingPointLight
 
-const wireframeToggle = document.getElementById('wireframe-toggle');
+const wireframeToggle = document.getElementById('wireframe-toggle')
 
 init()
 
@@ -76,9 +76,6 @@ async function init() {
     // Set up renderer
     renderer = new THREE.WebGLRenderer()
     renderer.setSize(window.innerWidth, window.innerHeight)
-    // renderer.domElement.style.position = 'fixed';
-    // renderer.domElement.style.top = '0';
-    // renderer.domElement.style.left = '0';
     document.body.appendChild(renderer.domElement)
 
     // Initialize sun
@@ -86,7 +83,7 @@ async function init() {
     sun.hitbox.material.emissive.set(0xffcc00)
     sun.hitbox.material.emissiveIntensity = 5
 
-    objects.push(sun) ; scene.add(sun.sphere,sun.hitbox)
+    objects.push(sun); scene.add(sun.sphere,sun.hitbox)
     sun.getAllSats().forEach(x => {
         objects.push(x)
         scene.add(x.sphere,x.hitbox)
@@ -110,10 +107,10 @@ async function init() {
 
     window.addEventListener('resize', onResize, false)
 
-    renderer.domElement.addEventListener('click', onObjectClick);
-    renderer.domElement.addEventListener('dblclick', onObjectDblClick, false);
-    renderer.domElement.addEventListener('mousemove', onMouseMove);
-    renderer.domElement.addEventListener('touchend', (e) => onTap(e), false);
+    renderer.domElement.addEventListener('click', onObjectClick)
+    renderer.domElement.addEventListener('dblclick', onObjectDblClick, false)
+    renderer.domElement.addEventListener('mousemove', onMouseMove)
+    renderer.domElement.addEventListener('touchend', (e) => onTap(e), false)
 
     followedInfoAnimateBtn.addEventListener('click', () => {
         followedObject.playAnimation(followedObject.played)
@@ -125,23 +122,23 @@ async function init() {
 
     document.querySelectorAll('.dropdown-item').forEach(link => {
         link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const planetName = this.textContent.trim().toLowerCase();
-            const planet = objects.find(p => p.name.toLowerCase() === planetName);
+            e.preventDefault()
+            const planetName = this.textContent.trim().toLowerCase()
+            const planet = objects.find(p => p.name.toLowerCase() === planetName)
             if (planet) {
                 // Update URL hash immediately
-                window.location.hash = planetName;
-                zoomToObject(planet);
+                window.location.hash = planetName
+                zoomToObject(planet)
             }
-        });
-    });
+        })
+    })
     window.addEventListener('hashchange', () => {
-        const hash = window.location.hash.substring(1).toLowerCase();
-        const obj = objects.find(o => o.name.toLowerCase() === hash);
+        const hash = window.location.hash.substring(1).toLowerCase()
+        const obj = objects.find(o => o.name.toLowerCase() === hash)
         if (obj){
-            zoomToObject(obj);
+            zoomToObject(obj)
         }
-    });
+    })
 
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
@@ -171,9 +168,9 @@ async function init() {
 
     wireframeToggle.addEventListener('change', (e) => {
         objects.forEach(obj => {
-            obj.toggleWireframe(e.target.checked);
-        });
-    });
+            obj.toggleWireframe(e.target.checked)
+        })
+    })
 
     // updateFollowedInfo()
     update()
@@ -185,7 +182,7 @@ async function init() {
 function update() {
     requestAnimationFrame(update)
 
-    let dt = clock.getDelta(); // Get time delta
+    let dt = clock.getDelta() // Get time delta
 
     objects.forEach(obj => {
         obj.update(dt)
@@ -216,13 +213,6 @@ function update() {
         hoverInfoBox.style.left = `${x}px`
         hoverInfoBox.style.top = `${y}px`
     }
-
-    // Update followed info box
-    // if (followedObject && followedObject !== sun) {
-    //     followedInfoBox.classList.add('visible')
-    // } else {
-    //     followedInfoBox.classList.remove('visible')
-    // }
 
     // Render the scene
     renderer.render(scene, camera)
@@ -262,30 +252,30 @@ function onObjectClick(event) {
 }
 
 function onTap(event) {
-    event.preventDefault(); // Prevent default to avoid delayed click event
+    event.preventDefault() // Prevent default to avoid delayed click event
 
-    tapCount++;
+    tapCount++
     
-    const touch = event.changedTouches[0];
-    // Create a pseudo event with mouse-like coordinates
+    const touch = event.changedTouches[0]
+    // Create a pseudo event with "cursor" coordinates
     const pseudoEvent = {
         clientX: touch.clientX,
         clientY: touch.clientY,
         detail: tapCount,
         preventDefault: () => {} // Add dummy function to avoid errors
-    };
+    }
     
     if (tapCount === 1) {
         // Wait for potential double tap
         tapTimeout = setTimeout(() => {
             onMouseMove(pseudoEvent)
-            onObjectClick(pseudoEvent); // Single tap action
-            tapCount = 0;
-        }, 300);
+            onObjectClick(pseudoEvent) // Single tap action
+            tapCount = 0
+        }, 300)
     } else if (tapCount === 2) {
-        clearTimeout(tapTimeout); // Cancel single tap timeout
-        onObjectDblClick(pseudoEvent); // Double tap action
-        tapCount = 0;
+        clearTimeout(tapTimeout) // Cancel single tap timeout
+        onObjectDblClick(pseudoEvent) // Double tap action
+        tapCount = 0
     }
 }
 
@@ -358,14 +348,14 @@ function onMouseMove(event) {
 function zoomToObject(celestialObj) {
     // Stop previous object's animation
     if (followedObject) {
-        followedObject.isFocused = false;
-        followedObject.playAnimation(true); // Reverse animation
+        followedObject.isFocused = false
+        followedObject.playAnimation(true) // Reverse animation
     }
 
     followedObject = null
     hoverInfoBox.classList.remove('visible')
     followedInfoBox.classList.remove('visible')
-    window.location.hash = celestialObj.name.toLowerCase();
+    window.location.hash = celestialObj.name.toLowerCase()
 
     const zoomDuration = 1000 // Zoom animation duration in ms
     const startTime = Date.now()
@@ -391,10 +381,9 @@ function zoomToObject(celestialObj) {
 
         // Navigate when close enough
         if (t >= 1) {
-            // window.location.href = `#${celestialObj.name.toLowerCase()}`
             followedObject = celestialObj
-            celestialObj.isFocused = true;
-            celestialObj.playAnimation(); // Play forward
+            celestialObj.isFocused = true
+            celestialObj.playAnimation() // Play forward
             prevObjectPosition.copy(celestialObj.sphere.position)
 
             // Update following object info box
@@ -428,25 +417,25 @@ function updateFollowedInfo() {
 
 
 function createStarField() {
-    const starCount = 5000;
-    const vertices = [];
-    const starRadius = 1000 * AU; // Adjust based on your scale (AU is 100)
+    const starCount = 5000
+    const vertices = []
+    const starRadius = 1000 * AU // Adjust based on your scale (AU is 100)
 
     for (let i = 0; i < starCount; i++) {
         // Random spherical distribution
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.acos((Math.random() * 2 - 1));
-        const r = starRadius * Math.cbrt(Math.random());
+        const theta = Math.random() * Math.PI * 2
+        const phi = Math.acos((Math.random() * 2 - 1))
+        const r = starRadius * Math.cbrt(Math.random())
         
         vertices.push(
             r * Math.sin(phi) * Math.cos(theta),
             r * Math.sin(phi) * Math.sin(theta),
             r * Math.cos(phi)
-        );
+        )
     }
 
-    const geometry = new THREE.BufferGeometry();
-    geometry.addAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+    const geometry = new THREE.BufferGeometry()
+    geometry.addAttribute('position', new THREE.Float32BufferAttribute(vertices, 3))
     
     const material = new THREE.PointsMaterial({
         color: 0xFFFFFF,
@@ -455,9 +444,9 @@ function createStarField() {
         transparent: true,
         opacity: 0.8,
         depthWrite: false // Ensure stars don't interfere with depth buffer
-    });
+    })
 
-    const stars = new THREE.Points(geometry, material);
-    stars.name = "starField";
-    scene.add(stars);
+    const stars = new THREE.Points(geometry, material)
+    stars.name = "starField"
+    scene.add(stars)
 }
