@@ -22,7 +22,7 @@ class CelestialObj {
         this.name = settings.name
         this.modelDir = settings.modelDir
         this.color = new THREE.Color(`rgb(${settings.color})`)
-        this.scale = settings.scale ?? 1
+        this.scale = (settings.scale ?? 1) * scaleMult
 
         this.bodyRadius = settings.bodyRadius
         this.orbitRadius = settings.orbitRadius * AU
@@ -39,7 +39,8 @@ class CelestialObj {
         this.info = {
             title: settings.info?.title || this.name,
             subtitle: settings.info?.subtitle || null,
-            description: settings.info?.description || null
+            description: settings.info?.description || null,
+            github: settings.info?.github || null
           }
 
         this.mixer = null
@@ -105,13 +106,25 @@ class CelestialObj {
 
         if (this.name != "sun")
             this.sphere.scale.set(
-                scaleMult*this.scale,
-                scaleMult*this.scale,
-                scaleMult*this.scale
+                this.scale,
+                this.scale,
+                this.scale
             )
 
+        // get model radius
+        const box = new THREE.Box3().setFromObject(this.sphere)
+        const boxSize = new THREE.Vector3()
+        box.getSize(boxSize)
+        const maxDimension = Math.max(boxSize.x, boxSize.y, boxSize.z)
+        this.modelRadius = maxDimension / 2
+
+        // Create hitbox (slightly larger than model)
+        const HITBOX_FACTOR = 5
+        const HITBOX_MAX = 15
+        this.hitboxBaseRadius = Math.min(this.modelRadius * HITBOX_FACTOR, HITBOX_MAX)
+
         this.hitbox = new THREE.Mesh(
-            new THREE.SphereGeometry(Math.min(this.bodyRadius*5,15), 32, 16),
+            new THREE.SphereGeometry(this.hitboxBaseRadius, 32, 16),
             new THREE.MeshStandardMaterial({
                 visible: false,
                 wireframe: true,
@@ -123,12 +136,13 @@ class CelestialObj {
         // if (this.name == "earth") console.log(this.sphere)
         
         this.sphere.position.set(this.orbitRadius, 0, 0)
-        this.hitbox.position.set(this.orbitRadius, 0, 0)
+        // this.hitbox.position.set(this.orbitRadius, 0, 0)
+        this.hitbox.position.copy(this.sphere.position)
 
         this.hitbox.userData.object = this
         this.sphere.userData.isHitbox = true
 
-        // Create 2D circle
+        // Create 2D circle sprite
         const canvas = document.createElement('canvas')
         const size = 256
         canvas.width = size
@@ -145,18 +159,22 @@ class CelestialObj {
         this.circle = new THREE.Sprite(new THREE.SpriteMaterial({
             map: texture,
             transparent: true,
-            depthTest: true, 
-            opacity: 0.8
+            depthTest: false, 
+            opacity: 0.8,
+            // color: 0x48ff00ff
         }))
-
-        // this.circle.scale.set(this.bodyRadius * 8 / this.scale, this.bodyRadius * 8 / this.scale, 1)
-        if (this.name == "sputnik") console.log(this.sphere)
-        this.circle.scale.set(this.bodyRadius * 8 / this.scale, this.bodyRadius * 8 / this.scale, 1)
         this.circle.visible = false // Start hidden
-        
-        this.sphere.add(this.circle) // Attach to planet
 
-        // return sphereMesh, hitboxMesh
+        // Add circle and hitbox to scene
+        this.sphere.add(this.circle)
+        this.sphere.add(this.hitbox)
+        this.circle.position.set(0, 0, 0) // Center on object
+
+        // Initial local scale for circle so its WORLD radius equals hitboxBaseRadius
+        const HIGHLIGHT_FACTOR = 2  // tune size of circle
+        const desiredCircleWorld = this.hitboxBaseRadius * HIGHLIGHT_FACTOR
+        const circleLocal = desiredCircleWorld / this.scale
+        this.circle.scale.set(circleLocal, circleLocal, 1)
     }
 
     async buildSatellites(satellites) {
@@ -213,6 +231,22 @@ class CelestialObj {
                 }
             }
         })
+    }
+
+    toggleHitbox(enabled) {
+        this.hitbox.material.visible = enabled
+    }
+
+    multiplyScale(factor) {
+        const s = this.scale * factor
+        this.sphere.scale.set(s, s, s)
+    }
+    resetScale() {
+        const s = this.scale
+        this.sphere.scale.set(s, s, s)
+
+        // if (this.circle)
+        //     this.circle.scale.set(this.circleBase, this.circleBase, 1)
     }
 
     update(dt=1) {

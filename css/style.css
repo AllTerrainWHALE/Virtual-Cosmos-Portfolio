@@ -184,6 +184,23 @@ p {
     font-size: 0.9rem;
 }
 
+.info-github {
+    display: none;
+    margin: 0.5rem 0;
+    /* color: #00ff9d; */
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+    .info-github.visible {
+        display: block;
+    }
+
+    .info-github:hover {
+        text-decoration: underline;
+    }
+
 .info-button {
     display: none
 }

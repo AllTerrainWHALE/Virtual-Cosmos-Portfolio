@@ -2,6 +2,8 @@ import CelestialObj from './celestialobj.js'
 import { loadingManager } from './loadingManager.js'
 
 var scene, camera, renderer, clock, controls
+var scalingAnimations = {};
+var isZooming = false;
 
 var tapCount = 0, tapTimeout = null
 
@@ -30,6 +32,7 @@ const followedInfoBox = document.getElementById('followed-info')
 const followedInfoTitle = followedInfoBox.querySelector('.info-title')
 const followedInfoSubTitle = followedInfoBox.querySelector('.info-subtitle')
 const followedInfoDescription = followedInfoBox.querySelector('.info-description')
+const followedInfoGithub = followedInfoBox.querySelector('.info-github')
 const followedInfoAnimateBtn = followedInfoBox.querySelector('.info-button')
 const followedInfoBackBtn = followedInfoBox.querySelector('.back-button')
 
@@ -49,7 +52,8 @@ const settingsBox = document.getElementById('settings')
     const settingPointSlider = document.getElementById('point-slider')
         settingPointSlider.value = settingPointLight
 
-const wireframeToggle = document.getElementById('wireframe-toggle')
+    const wireframeToggle = document.getElementById('wireframe-toggle')
+    const hitboxToggle = document.getElementById('hitbox-toggle')
 
 init()
 
@@ -202,6 +206,12 @@ async function init() {
         })
     })
 
+    hitboxToggle.addEventListener('change', (e) => {
+        objects.forEach(obj => {
+            obj.toggleHitbox(e.target.checked)
+        })
+    })
+
     // updateFollowedInfo()
     update()
     zoomToObject(followedObject)
@@ -212,6 +222,9 @@ async function init() {
 function update() {
     requestAnimationFrame(update)
 
+    // if (scalingAnimations && Object.keys(scalingAnimations).length > 0)
+    //     console.log(scalingAnimations)
+
     let dt = clock.getDelta() // Get time delta
 
     objects.forEach(obj => {
@@ -221,18 +234,22 @@ function update() {
     })
 
     if (followedObject) {
-        const currentObjectPos = followedObject.sphere.position.clone()
-        const delta = currentObjectPos.clone().sub(prevObjectPosition)
-
-        // Move camera and target by the planet's movement delta
-        camera.position.add(delta)
-        controls.target.copy(followedObject.sphere.position)
-        controls.update()
-
-        prevObjectPosition.copy(currentObjectPos)
+        if (!isZooming){
+            const currentObjectPos = followedObject.sphere.position.clone()
+            const delta = currentObjectPos.clone().sub(prevObjectPosition)
+    
+            // Move camera and target by the planet's movement delta
+            camera.position.add(delta)
+            controls.target.copy(followedObject.sphere.position)
+            controls.update()
+    
+            prevObjectPosition.copy(currentObjectPos)
+        }
     }
 
     if (hoveredObject || (infoPersist && hoverInfoBox.value)){
+        // console.log(hoveredObject.name, hoveredObject.circle.scale.x.toFixed(4), hoveredObject.modelRadius.toFixed(4))
+
         // Get screen position
         const vector = hoverInfoBox.value?.sphere.position.clone()
         vector.project(camera)
@@ -376,21 +393,41 @@ function onMouseMove(event) {
 }
 
 function zoomToObject(celestialObj) {
+    if (isZooming || !celestialObj) return
+    isZooming = true
+
     // Stop previous object's animation
     if (followedObject) {
         followedObject.isFocused = false
         followedObject.playAnimation(true) // Reverse animation
     }
 
-    followedObject = null
+    cancelAllScaleAnimations()
+
+    // followedObject = null
     hoverInfoBox.classList.remove('visible')
     followedInfoBox.classList.remove('visible')
-    window.location.hash = celestialObj.name.toLowerCase()
 
     const zoomDuration = 1000 // Zoom animation duration in ms
     const startTime = Date.now()
     const initialPos = camera.position.clone()
     const initialTarget = controls.target.clone()
+
+    // Animate previous object's satellites down to 1x (if exists)
+    if (followedObject) {
+        // console.log("Scaling down", followedObject.name, "sats")
+        followedObject.satellites.forEach(sat => {
+            animateScale(sat, 1, zoomDuration)
+        })
+    }
+
+    // Animate incoming object's immediate satellites up to 2x (start at same time as zoom)
+    if (celestialObj && Array.isArray(celestialObj.satellites)) {
+        // console.log("Scaling up", celestialObj.name, "sats")
+        celestialObj.satellites.forEach(sat => {
+            animateScale(sat, 2, zoomDuration)
+        })
+    }
 
     function animate() {
         const elapsed = Date.now() - startTime
@@ -399,9 +436,12 @@ function zoomToObject(celestialObj) {
         // Get current planet position with offset
         const planetPos = celestialObj.sphere.position.clone()
         const endPos = new THREE.Vector3().copy(planetPos).add(new THREE.Vector3(
-            1.3*celestialObj.bodyRadius**2+5,
-            1.3*celestialObj.bodyRadius**2+5,
-            1.3*celestialObj.bodyRadius**2+5
+            celestialObj.bodyRadius * 7,
+            celestialObj.bodyRadius * 7,
+            celestialObj.bodyRadius * 7
+            // 1.3*celestialObj.bodyRadius**2+5,
+            // 1.3*celestialObj.bodyRadius**2+5,
+            // 1.3*celestialObj.bodyRadius**2+5
         ))
         
         // Smoothly move camera and target toward current planet position
@@ -416,6 +456,17 @@ function zoomToObject(celestialObj) {
             celestialObj.playAnimation() // Play forward
             prevObjectPosition.copy(celestialObj.sphere.position)
 
+            // Ensure final scales are exact (in case of rounding)
+            if (Array.isArray(followedObject.satellites)) {
+                followedObject.satellites.forEach(sat => {
+                    sat.multiplyScale(2)
+                })
+            }
+
+            // Update URL hash
+            window.history.pushState(null, '', `#${celestialObj.id}`)
+            isZooming = false
+
             // Update following object info box
             updateFollowedInfo()
         } else {
@@ -425,11 +476,66 @@ function zoomToObject(celestialObj) {
     animate()
 }
 
+function animateScale(celestialObj, targetMultiplier = 1, duration = 500) {
+    if (!celestialObj || !celestialObj.sphere) return
+    const key = celestialObj.id ?? celestialObj.name ?? Math.random().toString(36)
+
+    // cancel previous animation for this object
+    if (scalingAnimations[key] && scalingAnimations[key].raf) {
+        cancelAnimationFrame(scalingAnimations[key].raf)
+        delete scalingAnimations[key]
+    }
+
+    const base = celestialObj.scale
+    const target = base * targetMultiplier
+    // current (absolute) value
+    const start = celestialObj.sphere.scale.x
+    const startTime = performance.now()
+
+    function step(now) {
+        const elapsed = now - startTime
+        const t = Math.min(elapsed / duration, 1)
+        const eased = easeOutCubic(t)
+        const current = start + (target - start) * eased
+        celestialObj.sphere.scale.set(current, current, current)
+
+        // keep circle visually stable (optional): adjust local scale of sprite
+        // if (celestialObj.circle) {
+        //     celestialObj.circle.scale.set(celestialObj.circleBase, celestialObj.circleBase, 1)
+        // }
+
+        if (t < 1) {
+            scalingAnimations[key] = { raf: requestAnimationFrame(step) }
+        } else {
+            // finished
+            delete scalingAnimations[key]
+        }
+    }
+
+    scalingAnimations[key] = { raf: requestAnimationFrame(step) }
+}
+function cancelAllScaleAnimations(){
+    Object.values(scalingAnimations).forEach(h => {
+        if (h && h.raf) cancelAnimationFrame(h.raf)
+    })
+    scalingAnimations = {}
+}
+
+function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3) }
+
 function updateFollowedInfo() {
     if (followedObject && followedObject !== sun) {
         followedInfoTitle.textContent = followedObject.info.title
         followedInfoSubTitle.textContent = followedObject.info.subtitle
         followedInfoDescription.innerHTML = followedObject.info.description
+        if (followedObject.info.github !== null) {
+            // followedInfoGithub.style.display = 'inline-block'
+            followedInfoGithub.href = followedObject.info.github
+            followedInfoGithub.classList.add('visible')
+        } else {
+            // followedInfoGithub.style.display = 'none'
+            followedInfoGithub.classList.remove('visible')
+        }
         followedInfoBox.classList.add('visible')
         if (followedObject.animations.length) 
             followedInfoAnimateBtn.classList.add('visible')
