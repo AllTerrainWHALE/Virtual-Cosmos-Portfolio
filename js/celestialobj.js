@@ -1,4 +1,5 @@
 // const Astronomy = require('astronomyjs')  // Install astronomyjs via npm
+import { loadingManager } from './loadingManager.js'
 
 const settings = await fetch('./json/settings.json')
   .then(response => response.json()) // Parse JSON
@@ -56,7 +57,11 @@ class CelestialObj {
         if (this.modelDir !== "") {
             const loader = new THREE.GLTFLoader()
             const gltf = await new Promise((resolve) => {
-                loader.load(this.modelDir, resolve)
+                loader.load(this.modelDir, resolve, undefined, (error) => {
+                    console.error('Error loading model:', error)
+                    loadingManager.incrementLoaded()
+                    resolve(null)
+                })
             })
 
             this.sphere = gltf.scene
@@ -82,7 +87,8 @@ class CelestialObj {
                     }
                 }
             })
-
+            
+            loadingManager.incrementLoaded()
             // if (this.name == "sat_1") console.log(this.sphere)
         }
         
@@ -94,6 +100,7 @@ class CelestialObj {
                     visible: true
                 })
             )
+            loadingManager.incrementLoaded()
         }
 
         if (this.name != "sun")
