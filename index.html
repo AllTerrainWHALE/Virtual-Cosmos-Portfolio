@@ -33,9 +33,11 @@
   </head>
 
   <body style="height: 100%; overflow: hidden;">
+
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
       <!-- Brand -->
-      <a class="navbar-brand" href="#sun" style="padding-left:1rem">Virtual Solar System Portfolio</a>
+      <a class="navbar-brand" href="#sun" style="padding-left:1rem">Virtual Cosmos Portfolio</a>
 
       <!-- Collapsible Navbar Menu Icon -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse">
@@ -67,6 +69,18 @@
         </ul>
       </div>
     </nav>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-logo">Virtual Cosmos</div>
+        <div class="loading-container">
+            <div class="loading-bar" id="loading-bar"></div>
+        </div>
+        <div class="loading-text" id="loading-text">Loading assets: 0%</div>
+        <div class="loading-details" id="loading-details"></div>
+    </div>
+
+    
 
     <div id="celestial-info" class="celestial-infobox">
       <h3 class="info-title"></h3>

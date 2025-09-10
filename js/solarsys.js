@@ -1,4 +1,5 @@
 import CelestialObj from './celestialobj.js'
+import { loadingManager } from './loadingManager.js'
 
 var scene, camera, renderer, clock, controls
 
@@ -53,6 +54,35 @@ const wireframeToggle = document.getElementById('wireframe-toggle')
 init()
 
 async function init() {
+
+    loadingManager.onProgress((progress) => {
+        const loadingBar = document.getElementById('loading-bar');
+        const loadingText = document.getElementById('loading-text');
+        const loadingDetails = document.getElementById('loading-details');
+        
+        loadingBar.style.width = progress + '%';
+        loadingText.textContent = `Loading assets: ${Math.round(progress)}%`;
+        
+        // Update loading details based on progress
+        if (progress < 30) {
+            loadingDetails.textContent = "Loading star fields...";
+        } else if (progress < 60) {
+            loadingDetails.textContent = "Loading planetary systems...";
+        } else if (progress < 90) {
+            loadingDetails.textContent = "Loading textures and details...";
+        } else {
+            loadingDetails.textContent = "Finalizing portfolio...";
+        }
+    });
+
+    loadingManager.onComplete(() => {
+        document.body.classList.add('loaded');
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+        }, 5000);
+    });
+
+    loadingManager.setTotalAssets(countAssets(settings.sun))
 
     clock = new THREE.Clock()
 
