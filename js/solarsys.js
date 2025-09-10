@@ -444,6 +444,17 @@ function updateFollowedInfo() {
     }
 }
 
+// Count total assets (you'll need to implement this based on your scene)
+function countAssets(settings) {
+    let count = 1; // Count the current object
+    if (settings.satellites) {
+        for (const satellite of Object.values(settings.satellites)) {
+            count += countAssets(satellite);
+        }
+    }
+    return count;
+}
+
 
 
 function createStarField() {
