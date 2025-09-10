@@ -16,16 +16,23 @@
             "mercury" : {
                 "name" : "Mercury",
                 "modelDir" : "assets\\models\\mercury.glb",
+
                 "color" : [160,160,160],
+
+                "scale" : 1.5,
+
                 "bodyRadius" : 2,
                 "orbitRadius" : 0.39,
                 "orbitSpeed" : 8.264E-07,
+
                 "rotationSpeed" : 58.8,
+
                 "info" : {
                     "title" : "JavaScript",
                     "subtitle" : "Mercury",
                     "description" : ""
                 },
+
                 "satellites" : {
                     "sat_1" : {
                         "name" : "sat_1",
@@ -41,6 +48,13 @@
 
                         "rotationSpeed" : 0,
                         "faceParent" : true,
+                        
+                        "info" : {
+                            "title" : "Virtual Cosmos Portfolio",
+                            "subtitle" : "A 3D interactive portfolio website",
+                            "description" : "",
+                            "github" : "https://github.com/AllTerrainWHALE/Virtual-Cosmos-Portfolio"
+                        },
 
                         "satellites" : {}
                     }
@@ -50,16 +64,23 @@
             "venus" : {
                 "name" : "Venus",
                 "modelDir" : "assets\\models\\venus.glb",
+
                 "color" : [255,153,51],
+
+                "scale" : 1.5,
+
                 "bodyRadius" : 2,
                 "orbitRadius" : 0.72,
                 "orbitSpeed" : 3.232E-07,
+
                 "rotationSpeed" : -244,
+
                 "info" : {
                     "title" : "Java",
                     "subtitle" : "Venus",
                     "description" : ""
                 },
+
                 "satellites" : {
                     
                 }
@@ -67,16 +88,23 @@
             "earth" : {
                 "name" : "Earth",
                 "modelDir" : "assets\\models\\earth.glb",
+
                 "color" : [0,128,255],
+
+                "scale" : 1.5,
+
                 "bodyRadius" : 2,
                 "orbitRadius" : 1.00,
                 "orbitSpeed" : 1.992E-07,
+
                 "rotationSpeed" : 1,
+
                 "info" : {
                     "title" : "Python",
                     "subtitle" : "Earth",
                     "description" : ""
                 },
+
                 "satellites" : {
                     "sputnik" : {
                         "name" : "Sputnik",
@@ -102,7 +130,8 @@
                         "info" : {
                             "title" : "ACS Network Generator",
                             "subtitle" : "Using the behaviours of ants to simulate network generation",
-                            "description" : "As my chosen project for my final year dissertation, I created my own model for an multi-agent ant simulation. The purpose of this model was to allow the ants to generate a chain of pheromone paths that connect mutiple food sources together for foraging, instead of conventional solutions where only one food source can be foraged at a time."
+                            "description" : "As my chosen project for my final year dissertation, I created my own model for an multi-agent ant simulation. The purpose of this model was to allow the ants to generate a chain of pheromone paths that connect mutiple food sources together for foraging, instead of conventional solutions where only one food source can be foraged at a time.",
+                            "github" : "https://github.com/AllTerrainWHALE/ACS-Network-Generator"
                         },
                         "satellites" : {}
                     }
@@ -113,16 +142,23 @@
             "mars" : {
                 "name" : "Mars",
                 "modelDir" : "assets\\models\\mars.glb",
+
                 "color" : [193,68,14],
+
+                "scale" : 1.5,
+
                 "bodyRadius" : 2,
                 "orbitRadius" : 1.88,
                 "orbitSpeed" : 1.059E-07,
+
                 "rotationSpeed" : 1.03,
+
                 "info" : {
                     "title" : "C#",
                     "subtitle" : "Mars",
                     "description" : ""
                 },
+
                 "satellites" : {
                     "sat_3" : {
                         "name" : "sat_3",
@@ -137,7 +173,8 @@
                         "info" : {
                             "title" : "WHAL-Int",
                             "subtitle" : "Egg Inc, API scraper",
-                            "description" : "This project was in colaboration with a community friend.<br>The purpose was to generate a leaderboard, formatted for Discord, to show leading coops in the game. The program fetches the games API, then proceeds to find the contract details before fetching coop data for specified coop names. With all that information, the program was able to generate a Discord formatted leaderboard message"
+                            "description" : "This project was in colaboration with a community friend.<br>The purpose was to generate a leaderboard, formatted for Discord, to show leading coops in the game. The program fetches the games API, then proceeds to find the contract details before fetching coop data for specified coop names. With all that information, the program was able to generate a Discord formatted leaderboard message",
+                            "github" : "https://github.com/AllTerrainWHALE/WHAL-Int"
                         },
                         "satellites" : {}
                     }                    
