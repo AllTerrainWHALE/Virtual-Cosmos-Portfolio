@@ -1,9 +1,8 @@
 // const Astronomy = require('astronomyjs')  // Install astronomyjs via npm
 import { loadingManager } from './loadingManager.js'
+import { loadSettings } from './settingsManager.js'
 
-const settings = await fetch('./json/settings.json')
-  .then(response => response.json()) // Parse JSON
-  .catch(error => console.error('Error fetching JSON:', error))
+const settings = await loadSettings()
 
 const AU = settings.AU
 const orbitSpeedMult = settings.orbitSpeedMult
@@ -69,6 +68,7 @@ class CelestialObj {
             
             // Set up animations
             if (gltf.animations && gltf.animations.length) {
+                // console.log(`Animations found for ${this.name}:`, gltf.animations); // Debug log
                 this.mixer = new THREE.AnimationMixer(this.sphere)
                 gltf.animations.map(clip => {
                     const action = this.mixer.clipAction(clip)
@@ -197,6 +197,8 @@ class CelestialObj {
 
     playAnimation(reverse = false) {
         if (!this.animations.length) return
+
+        // console.log(`Playing animation for ${this.name}, reverse=${reverse}`)
         
         if (this.currentAction) {
             this.currentAction.stop()
@@ -207,6 +209,11 @@ class CelestialObj {
             action.timeScale = reverse ? -1 : 1
             action.play()
         })
+        // // Play the first animation in the array (or modify as needed)
+        // this.currentAction = this.animations[0];
+        // this.currentAction.paused = false;
+        // this.currentAction.timeScale = reverse ? -1 : 1;
+        // this.currentAction.play();
 
         this.played = !reverse
     }
@@ -265,6 +272,10 @@ class CelestialObj {
         else this.sphere.rotation.y += this.rotationSpeed
 
         this.hitbox.position.copy(this.sphere.position)
+
+        if (this.mixer) {
+            this.mixer.update(dt); // Update the animation mixer
+        }
 
         // Keep circle aligned with camera
         if (this.circle.visible) {
