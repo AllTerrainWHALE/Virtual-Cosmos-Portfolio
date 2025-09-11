@@ -316,7 +316,7 @@ export class InteractionManager {
             this.followedInfoAnimateBtn.textContent = "Close"
         else
             this.followedInfoAnimateBtn.textContent = "Open"
-        
+    } else {
         this.followedInfoBox.classList.remove('visible')
     }
 }
