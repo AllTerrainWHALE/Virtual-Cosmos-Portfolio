@@ -24,6 +24,7 @@ export class InteractionManager {
         this.followedInfoSubTitle = null
         this.followedInfoDescription = null
         this.followedInfoGithub = null
+        this.followedInfoExpandBtn = null
 
         this.settingsToggle = null
         this.settingsBox = null
@@ -47,6 +48,7 @@ export class InteractionManager {
             this.followedInfoDescription = this.followedInfoBox.querySelector('.info-description')
             this.followedInfoGithub = this.followedInfoBox.querySelector('.info-github')
             this.followedInfoAnimateBtn = this.followedInfoBox.querySelector('.info-button')
+            this.followedInfoExpandBtn = this.followedInfoBox.querySelector('.expand-button')
             this.followedInfoBackBtn = this.followedInfoBox.querySelector('.back-button')
         
             // Buttons for persistent info box on following object
@@ -58,6 +60,19 @@ export class InteractionManager {
                 } else {
                     // console.log("Closing")
                     this.followedInfoAnimateBtn.textContent = "Open"
+                }
+            })
+            this.followedInfoExpandBtn.addEventListener('click', () => {
+                if (cameraManager.followedObject.info.description && !this.followedInfoDescription.classList.contains('visible')) {
+                    // EXPAND DESCRIPTION
+                    // // console.log("Open")
+                    this.followedInfoDescription.classList.add('visible')
+                    this.followedInfoExpandBtn.textContent = '^'
+                } else {
+                    // CLOSE DESCRIPTION
+                    // // console.log("Close")
+                    this.followedInfoDescription.classList.remove('visible')
+                    this.followedInfoExpandBtn.textContent = 'v'
                 }
             })
             this.followedInfoBackBtn.addEventListener('click',
@@ -317,6 +332,11 @@ export class InteractionManager {
         else
             this.followedInfoAnimateBtn.textContent = "Open"
         
+        if (cameraManager.followedObject.info.description)
+            this.followedInfoExpandBtn.classList.add('visible')
+        else
+            this.followedInfoExpandBtn.classList.remove('visible')
+    } else {
         this.followedInfoBox.classList.remove('visible')
     }
 }

@@ -182,7 +182,14 @@ p {
     color: #ffffff44;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease; 
+    /* display: none */
 }
+    .info-description.visible {
+        max-height: 20rem
+    }
 
 .info-github {
     display: none;
@@ -204,8 +211,14 @@ p {
 .info-button {
     display: none
 }
+    .info-button.visible {
+        display: block
+    }
 
-    .info-button.visible{
+.expand-button {
+    display: none
+}
+    .expand-button.visible {
         display: block
     }
 
