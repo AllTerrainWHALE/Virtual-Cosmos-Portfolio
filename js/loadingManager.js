@@ -40,5 +40,48 @@ export class LoadingManager {
     }
 }
 
-// Create a singleton instance
-export const loadingManager = new LoadingManager();
+function initLoadingManager(totalAssets) {
+    // const manager = new LoadingManager();
+
+    loadingManager.setTotalAssets(totalAssets);
+
+    loadingManager.onProgress((progress) => {
+        const loadingBar = document.getElementById('loading-bar');
+        const loadingText = document.getElementById('loading-text');
+        const loadingDetails = document.getElementById('loading-details');
+        
+        loadingBar.style.width = progress + '%';
+        loadingText.textContent = `Loading assets: ${Math.round(progress)}%`;
+        
+        // Update loading details based on progress
+        if (progress < 30) {
+            loadingDetails.textContent = "Loading star fields...";
+        } else if (progress < 60) {
+            loadingDetails.textContent = "Loading planetary systems...";
+        } else if (progress < 90) {
+            loadingDetails.textContent = "Loading textures and details...";
+        } else {
+            loadingDetails.textContent = "Finalizing portfolio...";
+        }
+    });
+
+    loadingManager.onComplete(() => {
+        document.body.classList.add('loaded');
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+        }, 5000);
+    });
+}
+
+function countAssets(settings) {
+    let count = 1; // Count the current object
+    if (settings.satellites) {
+        for (const satellite of Object.values(settings.satellites)) {
+            count += countAssets(satellite);
+        }
+    }
+    return count;
+}
+
+const loadingManager = new LoadingManager();
+export { initLoadingManager, countAssets, loadingManager };
