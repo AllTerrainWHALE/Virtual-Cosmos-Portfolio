@@ -1,3 +1,7 @@
+:root {
+    --default-text-colour: #ffffff66;
+}
+
 /* Extra small devices (portrait phones, less than 576px)
    No media query since this is the default in Bootstrap
 */
@@ -120,7 +124,7 @@ p {
 /* Info box for hovering over body */
 .celestial-infobox {
     position: fixed;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, .9);
     color: white;
     padding: 1rem;
     border-radius: 5px;
@@ -161,7 +165,11 @@ p {
         border-radius: 5px;
         border: 2px solid #ffffff33;
         margin: 0rem 1rem;
+        display: none
     }
+        .followed-infobox button.visible {
+            display: block
+        }
 
 /* Info box styling */
 
@@ -169,18 +177,19 @@ p {
     margin: 0 0 0.5rem 0;
     color: #ffffff;
     font-family: 'Oswald', sans-serif;
+    font-size: x-large
 }
 
 .info-subtitle {
     margin: 0 0 0.5rem 0;
-    color: #ffffff44;
+    color: var(--default-text-colour);
     font-family: 'Oswald', sans-serif;
     font-size: large;
 }
 
 .info-description {
     margin: 0;
-    color: #ffffff44;
+    color: var(--default-text-colour);
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9rem;
 
@@ -194,7 +203,11 @@ p {
     /* display: none */
 }
     .info-description.visible {
-        max-height: calc(100vh * 0.45)
+        max-height: calc(100vh * 0.7)
+    }
+    .info-description ul, ol {
+        color: inherit;
+        padding-left: 1.5rem
     }
 
 .info-links-container {
@@ -211,36 +224,23 @@ p {
     display: inline-block;
     margin: 0.5rem 0.25rem;
     /* padding: 0 0.5rem; */
-    /* color: #ffffff44; */
+    /* color: var(--default-text-colour); */
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9rem;
     text-decoration: none;
 }
-
     a.info-link:hover {
         text-decoration: underline;
     }
-
-.info-button {
-    display: none
-}
-    .info-button.visible {
-        display: block
+    span.info-link {
+        color: var(--default-text-colour)
     }
 
-.expand-button {
-    display: none
+.info-credit {
+    color: var(--default-text-colour);
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.5rem;
 }
-    .expand-button.visible {
-        display: block
-    }
-
-.back-button {
-    display: none
-}
-    .back-button.visible {
-        display: block
-    }
 
 /* Settings Toggle */
 .settings-toggle {

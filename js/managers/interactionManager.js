@@ -24,10 +24,10 @@ export class InteractionManager {
         this.followedInfoSubTitle = null
         this.followedInfoDescription = null
         this.followedInfoLinksContainer = null
+        this.followedInfoCredit = null
         this.followedInfoExpandBtn = null
 
-        this.settingsToggle = null
-        this.settingsBox = null
+        this.settingsBox, this.settingsToggle = null
         this.settingAmbientLight, this.settingAmbientValue, this.settingAmbientSlider = null
         this.settingPointLight, this.settingPointValue, this.settingPointSlider = null
         this.wireframeToggle, this.hitboxToggle = null
@@ -47,6 +47,7 @@ export class InteractionManager {
             this.followedInfoSubTitle = this.followedInfoBox.querySelector('.info-subtitle')
             this.followedInfoDescription = this.followedInfoBox.querySelector('.info-description')
             this.followedInfoLinksContainer = this.followedInfoBox.querySelector('.info-links-container')
+            // this.followedInfoCredit = this.followedInfoBox.querySelector('.info-credit')
 
             this.followedInfoAnimateBtn = this.followedInfoBox.querySelector('.info-button')
             this.followedInfoExpandBtn = this.followedInfoBox.querySelector('.expand-button')

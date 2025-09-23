@@ -66,7 +66,8 @@
                             "subtitle" : "A 3D interactive portfolio website",
                             "description" : "",
                             "links": {
-                                "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/Virtual-Cosmos-Portfolio"
+                                "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/Virtual-Cosmos-Portfolio",
+                                "<i class=\"fa-regular fa-circle\"></i> Original Model": ""
                             }
                         },
 
@@ -147,7 +148,8 @@
                             "description" : "As my chosen project for my final year dissertation, I created my own model for an multi-agent ant simulation. The purpose of this model was to allow the ants to generate a chain of pheromone paths that connect mutiple food sources together for foraging, instead of conventional solutions where only one food source can be foraged at a time.",
                             "links": {
                                 "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/ACS-Network-Generator",
-                                "<i class=\"fa-solid fa-file-pdf\"></i> Paper": "assets\\documents\\Modelling_duel_pheromone_ant_foraging_in_a_multiple_food_source_environment.pdf"
+                                "<i class=\"fa-solid fa-file-pdf\"></i> Paper": "assets\\documents\\Modelling_duel_pheromone_ant_foraging_in_a_multiple_food_source_environment.pdf",
+                                "<i class=\"fa-regular fa-circle\"></i> Original Model": ""
                             }
                         },
                         "satellites" : {}
@@ -193,11 +195,33 @@
                             "description" : "This project was in colaboration with a community friend.<br>The purpose was to generate a leaderboard, formatted for Discord, to show leading coops in the game. The program fetches the games API, then proceeds to find the contract details before fetching coop data for specified coop names. With all that information, the program was able to generate a Discord formatted leaderboard message",
                             "links": {
                                 "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/WHAL-Int",
-                                "test": "test"
+                                "<i class=\"fa-regular fa-circle\"></i> Original Model": ""
                             }
                         },
                         "satellites" : {}
-                    }                    
+                    },
+                    
+                    "world-conquest" : {
+                        "name" : "World Conquest",
+                        "modelDir" : "assets\\models\\satellites\\low-polyish_satellite.glb",
+                        "color" : [160,160,160],
+                        "bodyRadius" : 0.2,
+                        "orbitRadius" : 0.1,
+                        "orbitSpeed" : 9E-08,
+                        "rotationSpeed" : -20,
+                        "faceParent" : true,
+                        "scale" : 0.015,
+                        "info" : {
+                            "title" : "World Conquest",
+                            "subtitle" : "Online replica of the \"Risk\" boardgame, built in Unity",
+                            "description" : "One of many projects I had to take on during my time at university was a group project to recreate the boardgame \"Risk\" as an online edition.<ul><li><b>Role / scope:</b> Lead Developer. Full-stack implementation (frontend & backend). Designed and built \"Attack Phase\", and fully integrating all game phases with one another. Timeframe: 3 months.</li><li><b>Technologies:</b> Unity (frontend), C# & Blender (backend)</li><li><b>Challenges:</b> The greatest challenge was integrating all phases together into a unified game. Each phase was designed and built by a different member of the team, leading to varying programming techniques, unexpected bugs, and often uncommented code. These difference and inconsistencies led to me needing to tweek and correct code from all phases of the game in order to get them to function together.</li><li><b>Outcome:</b> Final version of the game is able to take 4 human players through a full game of World Conquest. This project let me learn a lot about C#, as well as a base understanding of the Unity engine.</li></ul>",
+                            "links": {
+                                "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/World-Conquest",
+                                "<i class=\"fa-regular fa-copyright\"></i> Model Credit": "https://skfb.ly/pBvWN"
+                            }
+                        },
+                        "satellites" : {}
+                    }
                 }
             }
         }

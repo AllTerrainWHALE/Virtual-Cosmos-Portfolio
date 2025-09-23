@@ -40,7 +40,8 @@ class CelestialObj {
             subtitle: settings.info?.subtitle || null,
             description: settings.info?.description || null,
             // github: settings.info?.github || null
-            links: settings.info?.links || {}
+            links: settings.info?.links || {},
+            credit: settings.info?.credit || null
         }
 
         this.mixer = null
