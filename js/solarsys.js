@@ -1,9 +1,10 @@
 import CelestialObj from './celestialobj.js'
-import { initLoadingManager, countAssets } from './loadingManager.js'
-import { sceneManager, SceneManager } from './sceneManager.js'
-import { cameraManager } from './cameraManager.js'
-import { interactionManager } from './interactionManager.js'
-import { loadSettings } from './settingsManager.js'
+
+import { initLoadingManager, countAssets } from './managers/loadingManager.js'
+import { sceneManager, SceneManager } from './managers/sceneManager.js'
+import { cameraManager } from './managers/cameraManager.js'
+import { interactionManager } from './managers/interactionManager.js'
+import { loadSettings } from './managers/settingsManager.js'
 
 export class SolarSystem {
     constructor() {
@@ -44,7 +45,7 @@ export class SolarSystem {
     }
 
     update() {
-        requestAnimationFrame(_ => this.update())
+        requestAnimationFrame(() => this.update())
         const dt = sceneManager.clock.getDelta()
         this.objects.forEach(obj => obj.update(dt))
         cameraManager.update(dt)
