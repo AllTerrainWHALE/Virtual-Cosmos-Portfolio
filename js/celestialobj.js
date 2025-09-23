@@ -1,6 +1,6 @@
 // const Astronomy = require('astronomyjs')  // Install astronomyjs via npm
-import { loadingManager } from './loadingManager.js'
-import { loadSettings } from './settingsManager.js'
+import { loadingManager } from './managers/loadingManager.js'
+import { loadSettings } from './managers/settingsManager.js'
 
 const settings = await loadSettings()
 
@@ -34,13 +34,14 @@ class CelestialObj {
         this.angle = Math.random() * Math.PI // Initial angle
 
         this.camera = camera
-
+        
         this.info = {
             title: settings.info?.title || this.name,
             subtitle: settings.info?.subtitle || null,
             description: settings.info?.description || null,
-            github: settings.info?.github || null
-          }
+            // github: settings.info?.github || null
+            links: settings.info?.links || {}
+        }
 
         this.mixer = null
         this.animations = []

@@ -1,4 +1,4 @@
-import { solarSystem } from './solarsys.js'
+import { solarSystem } from '../solarsys.js'
 import { sceneManager } from './sceneManager.js'
 import { cameraManager } from './cameraManager.js'
 
@@ -23,7 +23,7 @@ export class InteractionManager {
         this.followedInfoTitle = null
         this.followedInfoSubTitle = null
         this.followedInfoDescription = null
-        this.followedInfoGithub = null
+        this.followedInfoLinksContainer = null
         this.followedInfoExpandBtn = null
 
         this.settingsToggle = null
@@ -46,7 +46,8 @@ export class InteractionManager {
             this.followedInfoTitle = this.followedInfoBox.querySelector('.info-title')
             this.followedInfoSubTitle = this.followedInfoBox.querySelector('.info-subtitle')
             this.followedInfoDescription = this.followedInfoBox.querySelector('.info-description')
-            this.followedInfoGithub = this.followedInfoBox.querySelector('.info-github')
+            this.followedInfoLinksContainer = this.followedInfoBox.querySelector('.info-links-container')
+
             this.followedInfoAnimateBtn = this.followedInfoBox.querySelector('.info-button')
             this.followedInfoExpandBtn = this.followedInfoBox.querySelector('.expand-button')
             this.followedInfoBackBtn = this.followedInfoBox.querySelector('.back-button')
@@ -310,36 +311,64 @@ export class InteractionManager {
     }
 
     updateFollowedInfo() {
-    if (cameraManager.followedObject && cameraManager.followedObject !== solarSystem.sun) {
-        this.followedInfoTitle.textContent = cameraManager.followedObject.info.title
-        this.followedInfoSubTitle.textContent = cameraManager.followedObject.info.subtitle
-        this.followedInfoDescription.innerHTML = cameraManager.followedObject.info.description
-        if (cameraManager.followedObject.info.github !== null) {
-            this.followedInfoGithub.href = cameraManager.followedObject.info.github
-            this.followedInfoGithub.classList.add('visible')
-        } else 
-            this.followedInfoGithub.classList.remove('visible')
+        if (cameraManager.followedObject) { // && cameraManager.followedObject !== solarSystem.sun) {
+            this.followedInfoTitle.textContent = cameraManager.followedObject.info.title
+            this.followedInfoSubTitle.textContent = cameraManager.followedObject.info.subtitle
+            this.followedInfoDescription.innerHTML = cameraManager.followedObject.info.description
+            this.followedInfoLinksContainer.innerHTML = ""
+            Object.entries(cameraManager.followedObject.info.links).forEach(([label,url]) => this.configureLink(label,url))
+            // if (cameraManager.followedObject.info.github !== null) {
+            //     this.followedInfoLinksContainer.href = cameraManager.followedObject.info.github
+            //     this.followedInfoLinksContainer.classList.add('visible')
+            // } else 
+            //     this.followedInfoLinksContainer.classList.remove('visible')
 
-        this.followedInfoBox.classList.add('visible')
+            this.followedInfoBox.classList.add('visible')
+            
+            if (cameraManager.followedObject.parent != null)
+                this.followedInfoBackBtn.classList.add('visible')
+            else
+                this.followedInfoBackBtn.classList.remove('visible')
 
-        if (cameraManager.followedObject.animations.length) 
-            this.followedInfoAnimateBtn.classList.add('visible')
-        else
-            this.followedInfoAnimateBtn.classList.remove('visible')
+            if (cameraManager.followedObject.animations.length) 
+                this.followedInfoAnimateBtn.classList.add('visible')
+            else
+                this.followedInfoAnimateBtn.classList.remove('visible')
 
-        if (cameraManager.followedObject.played)
-            this.followedInfoAnimateBtn.textContent = "Close"
-        else
-            this.followedInfoAnimateBtn.textContent = "Open"
-        
-        if (cameraManager.followedObject.info.description)
-            this.followedInfoExpandBtn.classList.add('visible')
-        else
-            this.followedInfoExpandBtn.classList.remove('visible')
-    } else {
-        this.followedInfoBox.classList.remove('visible')
+            if (cameraManager.followedObject.played)
+                this.followedInfoAnimateBtn.textContent = "Close"
+            else
+                this.followedInfoAnimateBtn.textContent = "Open"
+            
+            if (cameraManager.followedObject.info.description)
+                this.followedInfoExpandBtn.classList.add('visible')
+            else
+                this.followedInfoExpandBtn.classList.remove('visible')
+        } else {
+            this.followedInfoBox.classList.remove('visible')
+        }
     }
-}
+
+    configureLink(label, url) {
+        var element
+        if (url != "")
+        {
+            element = document.createElement('a')
+            element.className = "info-link"
+            element.href = url
+            element.target = "_blank"
+            element.rel = "noopener noreferrer"
+            element.innerHTML = label
+        }
+        else
+        {
+            element = document.createElement('span')
+            element.className = "info-link"
+            element.innerHTML = label
+        }
+
+        this.followedInfoLinksContainer.appendChild(element)
+    }
 }
 
 const interactionManager = new InteractionManager()

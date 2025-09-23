@@ -143,6 +143,7 @@ p {
     margin: 1rem 1rem;
     min-width: 9rem;
     max-height: 100%;
+    overflow: visible;
     transform: none;
     pointer-events: auto;
     opacity: 0;
@@ -182,29 +183,41 @@ p {
     color: #ffffff44;
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9rem;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease; 
+
+    max-height: 0vh;
+
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff44 transparent;
+
+    transition: max-height 0.5s ease;
     /* display: none */
 }
     .info-description.visible {
-        max-height: 20rem
+        max-height: calc(100vh * 0.45)
     }
 
-.info-github {
-    display: none;
-    margin: 0.5rem 0;
-    /* color: #00ff9d; */
+.info-links-container {
+    display: block;
+    /* gap: 0.5rem */
+}
+
+    .info-links-container .info-link:not(:first-child) {
+        border-left: 2px solid #ffffff44;
+        padding-left: 0.5rem;
+    }
+
+.info-link {
+    display: inline-block;
+    margin: 0.5rem 0.25rem;
+    /* padding: 0 0.5rem; */
+    /* color: #ffffff44; */
     font-family: 'Open Sans', sans-serif;
     font-size: 0.9rem;
     text-decoration: none;
 }
 
-    .info-github.visible {
-        display: block;
-    }
-
-    .info-github:hover {
+    a.info-link:hover {
         text-decoration: underline;
     }
 
@@ -219,6 +232,13 @@ p {
     display: none
 }
     .expand-button.visible {
+        display: block
+    }
+
+.back-button {
+    display: none
+}
+    .back-button.visible {
         display: block
     }
 
@@ -504,6 +524,6 @@ p {
     }
 
     .followed-infobox{
-        max-width: 25%
+        max-width: 35%
     }
 }
