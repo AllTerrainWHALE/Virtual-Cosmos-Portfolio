@@ -24,6 +24,7 @@ class CelestialObj {
         this.scale = (settings.scale ?? 1) * scaleMult
 
         this.bodyRadius = settings.bodyRadius
+        this.hitboxScale = settings.hitboxScale || 1
         this.orbitRadius = settings.orbitRadius * AU
         this.orbitSpeed = settings.orbitSpeed * orbitSpeedMult // Speed of orbit (radians per second)
         this.rotationSpeed = settings.rotationSpeed * rotationSpeedMult
@@ -40,7 +41,9 @@ class CelestialObj {
             subtitle: settings.info?.subtitle || null,
             description: settings.info?.description || null,
             // github: settings.info?.github || null
-            links: settings.info?.links || {}
+            links: settings.info?.links || {},
+            images: settings.info?.images || [],
+            credit: settings.info?.credit || null
         }
 
         this.mixer = null
@@ -118,6 +121,7 @@ class CelestialObj {
         box.getSize(boxSize)
         const maxDimension = Math.max(boxSize.x, boxSize.y, boxSize.z)
         this.modelRadius = maxDimension / 2
+        this.modelRadius *= this.hitboxScale
 
         // Create hitbox (slightly larger than model)
         const HITBOX_FACTOR = 5

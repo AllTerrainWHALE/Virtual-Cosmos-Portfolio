@@ -29,15 +29,16 @@
 
     <link rel="stylesheet" href="css/style.css">
 
-    <title>Virtual Cosmos Portfolio</title>
+    <title>Bradley Hopper - Software Engineer</title>
+    <link rel="icon" type="image/x-icon" href="./favicon.ico">
   </head>
 
   <body style="height: 100%; overflow: hidden;">
 
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-sm navbar-dark">
       <!-- Brand -->
-      <a class="navbar-brand" href="#sun" style="padding-left:1rem">Virtual Cosmos Portfolio</a>
+      <a class="navbar-brand" href="#sun" style="padding-left:1rem"><h1>Bradley Hopper</h1></a>
 
       <!-- Collapsible Navbar Menu Icon -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse">
@@ -52,9 +53,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#sun">Home</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="html/about.html">About</a>
-          </li>
+          </li> -->
   
           <!-- Dropdown -->
           <li class="nav-item dropdown">
@@ -83,26 +84,31 @@
     
 
     <div id="celestial-info" class="celestial-infobox">
-      <h3 class="info-title"></h3>
-      <h4 class="info-subtitle"></h4>
+      <h1 class="info-title"></h1>
+      <h2 class="info-subtitle"></h2>
       <!-- <p class="info-description"></p> -->
+      <span>Double click/tap to zoom in</span>
     </div>
 
     <div id="followed-info" class="celestial-infobox followed-infobox">
-      <h3 class="info-title"></h3>
-      <h4 class="info-subtitle"></h4>
-      <div class="info-description-wrapper">
-        <p class="info-description"></p>
-      </div>
+      <h1 class="info-title"></h1>
+      <h2 class="info-subtitle"></h2>
+      <p class="info-description"></p>
       <div class="info-links-container"></div>
+      <!-- <span class="info-credit"></span> -->
       <!-- <a class="info-link" href="" target="_blank" rel="noopener noreferrer"><i class="fa fa-github"></i> Github</a> -->
-      <button class="info-button" style="left:0">Animate</button>
-      <button class="expand-button" style="left:40%">v</button>
-      <button class="back-button" style="right:0">Back</button>
+      <div class="button-container space-between" style="right:0; padding:0 1rem">
+        <div style="display:flex; gap:0.5rem">
+          <button class="info-button">Animate</button>
+          <button class="images-button visible">Images</button>
+        </div>
+        <button class="expand-button"><i class="fa-solid fa-angle-down"></i></button>
+        <button class="back-button">Back</button>
+      </div>
     </div>
 
     <div id="settings" class="settings-box">
-      <h3 class="info-title">Settings</h3>
+      <h1 class="info-title">Settings</h1>
       <div class="settings-content">
 
         <div class="setting-group">
@@ -128,6 +134,18 @@
     <div id="settings-toggle" class="settings-toggle">
       <i class="fas fa-gear"></i>
     </div>
+
+    <div id="versionTag">
+      <span>BETA VERSION</span>
+    </div>
+
+    <div id="image-viewer" class="image-viewer">
+      <span class="close">&times;</span>
+      <img class="viewer-image" src="" alt="Project image">
+      <div class="nav prev">&#10094;</div>
+      <div class="nav next">&#10095;</div>
+    </div>
+
 
     <script type="module" src="js/solarsys.js"></script>
   </body>
