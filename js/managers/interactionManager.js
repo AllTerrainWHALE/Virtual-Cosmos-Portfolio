@@ -2,11 +2,6 @@ import { solarSystem } from '../solarsys.js'
 import { sceneManager } from './sceneManager.js'
 import { cameraManager } from './cameraManager.js'
 
-// let renderer, camera, objects, hoveredObject = null
-// let hoverInfoBox, hoverInfoTitle, hoverInfoSubTitle
-// let followedInfoBox, followedInfoTitle, followedInfoSubTitle, followedInfoDescription
-// let infoPersist = false
-
 export class InteractionManager {
     constructor() {
         this.infoPersist = false
@@ -26,6 +21,14 @@ export class InteractionManager {
         this.followedInfoLinksContainer = null
         this.followedInfoCredit = null
         this.followedInfoExpandBtn = null
+
+        this.imageViewer = null;
+        this.viewerImage = null;
+        this.viewerClose = null;
+        this.viewerPrev = null;
+        this.viewerNext = null;
+        this.currentImageIndex = 0;
+
 
         this.settingsBox, this.settingsToggle = null
         this.settingAmbientLight, this.settingAmbientValue, this.settingAmbientSlider = null
@@ -69,17 +72,41 @@ export class InteractionManager {
                     // EXPAND DESCRIPTION
                     // // console.log("Open")
                     this.followedInfoDescription.classList.add('visible')
-                    this.followedInfoExpandBtn.textContent = '^'
+                    this.followedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-up\"></i>"
                 } else {
                     // CLOSE DESCRIPTION
                     // // console.log("Close")
                     this.followedInfoDescription.classList.remove('visible')
-                    this.followedInfoExpandBtn.textContent = 'v'
+                    this.followedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-down\"></i>"
                 }
             })
             this.followedInfoBackBtn.addEventListener('click',
                 () => cameraManager.zoomToObject(cameraManager.followedObject.parent)
             )
+
+        // Image viewer
+        this.followedInfoImagesBtn = this.followedInfoBox.querySelector('.images-button');
+
+        this.imageViewer = document.getElementById('image-viewer');
+            this.viewerImage = this.imageViewer.querySelector('.viewer-image');
+            this.viewerClose = this.imageViewer.querySelector('.close');
+            this.viewerPrev = this.imageViewer.querySelector('.prev');
+            this.viewerNext = this.imageViewer.querySelector('.next');
+
+        this.followedInfoImagesBtn.addEventListener('click', () => this.openImageViewer());
+
+        this.viewerClose.addEventListener('click', () => this.closeImageViewer());
+        this.viewerPrev.addEventListener('click', () => this.showImage(this.currentImageIndex - 1));
+        this.viewerNext.addEventListener('click', () => this.showImage(this.currentImageIndex + 1));
+
+        document.addEventListener('keydown', (e) => {
+        if (this.imageViewer.style.display === 'flex') {
+            if (e.key === 'ArrowLeft') this.showImage(this.currentImageIndex - 1);
+            if (e.key === 'ArrowRight') this.showImage(this.currentImageIndex + 1);
+            if (e.key === 'Escape') this.closeImageViewer();
+        }
+        });
+
 
         // Settings menu control
         this.settingsToggle = document.getElementById('settings-toggle')
@@ -168,9 +195,24 @@ export class InteractionManager {
             // Get screen position
             const vector = this.hoverInfoBox.value?.sphere.position.clone()
             vector.project(cameraManager.camera)
-            const x = (vector.x * 0.5 + 0.5) * window.innerWidth
-            const y = (vector.y * -0.5 + 0.5) * window.innerHeight
-            
+            var x = (vector.x * 0.5 + 0.5) * window.innerWidth
+            var y = (vector.y * -0.5 + 0.45) * window.innerHeight
+
+            // Get box dimensions
+            const boxWidth = this.hoverInfoBox.offsetWidth
+            const boxHeight = this.hoverInfoBox.offsetHeight
+
+            // Clamp within screen bounds with a little margin
+            const margin = 10
+            x = Math.min(
+            Math.max(x, margin + boxWidth/2),
+            window.innerWidth - boxWidth/2 - margin
+            )
+            y = Math.min(
+            Math.max(y, margin + boxHeight),
+            window.innerHeight - margin
+            )
+
             // Position info box
             this.hoverInfoBox.style.left = `${x}px`
             this.hoverInfoBox.style.top = `${y}px`
@@ -289,6 +331,24 @@ export class InteractionManager {
         }
     }
 
+    openImageViewer() {
+        const imgs = cameraManager.followedObject.info.images || [];
+        if (!imgs.length) return;
+        this.currentImageIndex = 0;
+        this.showImage(this.currentImageIndex);
+        this.imageViewer.style.display = 'flex';
+    }
+    closeImageViewer() {
+        this.imageViewer.style.display = 'none';
+    }
+    showImage(index) {
+        const imgs = cameraManager.followedObject.info.images || [];
+        if (!imgs.length) return;
+        this.currentImageIndex = (index + imgs.length) % imgs.length;
+        this.viewerImage.src = `${imgs[this.currentImageIndex]}`;
+    }
+
+
     updateFocusFromUrl() {
         const urlFocusObj = window.location.href.split('#')[1]
         // console.log(`URL focus object: ${urlFocusObj}`)
@@ -340,6 +400,17 @@ export class InteractionManager {
                 this.followedInfoAnimateBtn.textContent = "Close"
             else
                 this.followedInfoAnimateBtn.textContent = "Open"
+
+            const imgCount = cameraManager.followedObject.info.images.length
+            if (imgCount > 0){
+                this.followedInfoImagesBtn.classList.add('visible')
+                if (imgCount == 1)
+                    this.followedInfoImagesBtn.textContent = "Image"
+                else
+                    this.followedInfoImagesBtn.textContent = "Images"
+            }
+            else
+                this.followedInfoImagesBtn.classList.remove('visible')
             
             if (cameraManager.followedObject.info.description)
                 this.followedInfoExpandBtn.classList.add('visible')
@@ -355,7 +426,7 @@ export class InteractionManager {
         if (url != "")
         {
             element = document.createElement('a')
-            element.className = "info-link"
+            element.className = "info-link footer"
             element.href = url
             element.target = "_blank"
             element.rel = "noopener noreferrer"
@@ -364,7 +435,7 @@ export class InteractionManager {
         else
         {
             element = document.createElement('span')
-            element.className = "info-link"
+            element.className = "info-link footer"
             element.innerHTML = label
         }
 

@@ -14,13 +14,19 @@
         "rotationSpeed" : 25,
 
         "info": {
-            "title" : " ",
+            "title" : "Bradley Hopper",
+            "subtitle" : "About Me",
+            "description" : "<p>As a recent graduate from Sussex University, I'm a passionate software developer with an eagerness to push myself beyond my limits of understanding (and a side habit of building physics simulations). I strive to learn something new in every project I take on, whether it be small or massively complex, and love a challenging problem to solve.</p><p>My interest in programming started off being self taught through many, <i>many</i> personal projects. The joy I recieved from succeeding in these projects led me towards my university degree in Computer Science, specializing in Artifical Intelligence, resulting in a <b>1<sup>st</sup> class</b> grade.</p><h3>Technologies</h3><ul><li><b>Languages:</b> Python <i>(expert)</i>, C# <i>(advanced)</i>, JavaScript <i>(proficient)</i>, HTML/CSS <i>(proficient)</i>, Java <i>(proficient)</i></li><li><b>Frameworks:</b> PyTorch, NumPy, CUDA/Numba, .NET, RESTful, Node.js, Bootstrap</li><li><b>Developer Tools:</b> Git & GitHub, VS Code, Visual Studio, Unity, Blender, Google Sheets</li><li><b>Skills:</b> Project Management, Artificial Intelligence, Machine Learning, Back-end Development, Project Planning</li></ul>",
+
+            "holding" : "<p>Over the years, I have ventured into using a variety of different tools for my projects:</p><ul><li><b>Python</b>, the language I was born in, is where I feel most comfortable. It is my go-to choice when starting up a new project, unless circumstances require otherwise.</li></ul>",
+
             "links" : {
-                "<i class=\"fa-solid fa-location-dot\"></i> London": "",
-                "<i class=\"fa-solid fa-envelope\"></i> bradleyhopper6@gmail.com": "",
-                "<i class=\"fa-solid fa-phone\"></i> +4477 6951 5218": "",
+                "<i class=\"fa-solid fa-location-dot\"></i> London, UK": "",
+                "<i class=\"fa-regular fa-envelope\"></i> bradleyhopper6@gmail.com": "mailto:bradleyhopper6@gmail.com",
+                "<i class=\"fa-solid fa-phone\"></i> +44 7769 515218": "tel:+447769515218",
                 "<i class=\"fa fa-github\"></i> AllTerrainWHALE": "https://github.com/AllTerrainWHALE",
-                "<i class=\"fab fa-linkedin-in\"></i> bradley-hopper": "https://linkedin.com/in/bradley-hopper"
+                "<i class=\"fab fa-linkedin-in\"></i> bradley-hopper": "https://linkedin.com/in/bradley-hopper",
+                "<i class=\"fa-solid fa-file-pdf\"></i> CV" : "assets\\documents\\BradleyHopperCV_25-09.pdf"
             }
         },
 
@@ -46,8 +52,8 @@
                 },
 
                 "satellites" : {
-                    "sat_1" : {
-                        "name" : "sat_1",
+                    "virtual-cosmos-portfolio" : {
+                        "name" : "virtual-cosmos-portfolio",
                         "modelDir" : "assets\\models\\satellites\\sat_1.glb",
 
                         "color" : [160,160,160],
@@ -64,7 +70,7 @@
                         "info" : {
                             "title" : "Virtual Cosmos Portfolio",
                             "subtitle" : "A 3D interactive portfolio website",
-                            "description" : "",
+                            "description" : "A fully immersive portfolio built as a navigable 3D scene in the browser.<ul><li><b>Role / scope:</b> Sole designer and implementer of the interactive space environment, custom camera controls, UI overlays, and 3D models.</li><li><b>Technologies:</b> JavaScript, Three.js, HTML, CSS, Blender.</li><li><b>Challenges:</b> Optimizing GLB asset loading for performance; creating intuitive orbit/navigation controls; ensuring cross-device responsiveness and sizing.</li><li><b>Outcome:</b> Delivered a performant, engaging portfolio experience that can be viewed on a range of device resolutions; deepened JavaScript, HTML and CSS expertise; received positive feedback from peers and recruiters.</li></ul>",
                             "links": {
                                 "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/Virtual-Cosmos-Portfolio",
                                 "<i class=\"fa-regular fa-circle\"></i> Original Model": ""
@@ -121,19 +127,30 @@
                 },
 
                 "satellites" : {
-                    "sputnik" : {
-                        "name" : "Sputnik",
+                    "basic-banking-machine" : {
+                        "name" : "basic-banking-machine",
                         "modelDir" : "assets\\models\\satellites\\sputnik.glb",
                         "color" : [160,160,160],
                         "bodyRadius" : 0.2,
                         "orbitRadius" : 0.05,
                         "orbitSpeed" : 4E-07,
-                        "rotationSpeed" : -20,
-                        "faceParent" : true,
+                        "rotationSpeed" : 1,
+                        "faceParent" : false,
+                        "hitboxScale" : 0.5,
+
+                        "info" : {
+                            "title" : "Basic Banking Machine",
+                            "subtitle" : "My first project, building a banking ATM with Tkinter",
+                            "description" : "An incredibly basic bank machine developed as my first personal programming project, with the goal in mind of expanding my programming skills and knowledge, as well as exploring out of the CLI environment and into GUI development.<ul><li><b>Role / scope:</b> Sole-developer; designed a basic GUI with core functionalities of an traditional ATM</li><li><b>Technologies:</b> Python, Tkinter, CSV reading/writing.</li><li><b>Challenges:</b> Learning how to build a GUI with Tkinter from scratch; adding functions to buttons</li><li><b>Outcome:</b> Despite my very limited knowledge at the time, a fully functional mock banking machine was produced, allowing for depositing, taking money out, and viewing transaction logs.</li></ul>",
+                            "links" : {
+                                "<i class=\"fa-regular fa-circle\"></i> Original Model": ""
+                            }
+                        },
+
                         "satellites" : {}
                     },
-                    "sat_2" : {
-                        "name" : "sat_2",
+                    "asc-network-generator" : {
+                        "name" : "asc-network-generator",
                         "modelDir" : "assets\\models\\satellites\\sat_2.glb",
                         "color" : [160,160,160],
                         "bodyRadius" : 0.2,
@@ -145,7 +162,13 @@
                         "info" : {
                             "title" : "ACS Network Generator",
                             "subtitle" : "Using the behaviours of ants to simulate network generation",
-                            "description" : "As my chosen project for my final year dissertation, I created my own model for an multi-agent ant simulation. The purpose of this model was to allow the ants to generate a chain of pheromone paths that connect mutiple food sources together for foraging, instead of conventional solutions where only one food source can be foraged at a time.",
+                            "description" : "A multi-agent ant simulation developed as my final year dissertation to create pheromone-based paths between multiple food sources, while only utilizing two unqiue pheromones.<ul><li><b>Role / scope:</b> Sole researcher and developer; designed core simulation model and pheromone interaction logic. Timeframe: 7 months</li><li><b>Technologies:</b> Python, PyTorch, NumPy, CUDA/Numba; custom visualization scripts.</li><li><b>Challenges:</b> Modeling for solely dual-pheromone dynamics, balancing exploration vs. exploitation across targets, performance tuning for real-time feedback.</li><li><b>Outcome:</b> Demonstrated efficient network generation for multiple food sources; only two unique types of pheromones were used, a technique unseen in publications; contributed key findings to dissertation.</li></ul>",
+                            "images" : [
+                                "assets\\images\\asc-network-generator\\2-waypoints.png",
+                                "assets\\images\\asc-network-generator\\3-waypoints.png",
+                                "assets\\images\\asc-network-generator\\4-waypoints.png",
+                                "assets\\images\\asc-network-generator\\5-waypoints.png"
+                            ],
                             "links": {
                                 "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/ACS-Network-Generator",
                                 "<i class=\"fa-solid fa-file-pdf\"></i> Paper": "assets\\documents\\Modelling_duel_pheromone_ant_foraging_in_a_multiple_food_source_environment.pdf",
@@ -179,8 +202,8 @@
                 },
 
                 "satellites" : {
-                    "sat_3" : {
-                        "name" : "sat_3",
+                    "whal-int" : {
+                        "name" : "whal-int",
                         "modelDir" : "assets\\models\\satellites\\sat_3.glb",
                         "color" : [160,160,160],
                         "bodyRadius" : 0.2,
@@ -191,9 +214,12 @@
                         "scale" : 0.05,
                         "info" : {
                             "title" : "WHAL-Int",
-                            "subtitle" : "Egg Inc, API scraper",
-                            "description" : "This project was in colaboration with a community friend.<br>The purpose was to generate a leaderboard, formatted for Discord, to show leading coops in the game. The program fetches the games API, then proceeds to find the contract details before fetching coop data for specified coop names. With all that information, the program was able to generate a Discord formatted leaderboard message",
-                            "links": {
+                            "subtitle" : "Egg Inc, API scraper for generating group leaderboards",
+                            "description" : "A C# console application to fetch Egg Inc data and produce leaderboards formatted for Discord.<ul><li><b>Role / scope:</b> Initially co-developer, now sole-developer; implemented REST API consumption, data parsing, calculations and logic to generate additional data, and formatting logic.</li><li><b>Technologies:</b> C#, .NET Core, .NET HttpClient for RESTful API, JSON parsing.</li><li><b>Challenges:</b> Learning C#/.NET fundamentals, handling asynchronous calls and error conditions, and learning the use of RESTful API.</li><li><b>Outcome:</b> Delivered a reliable leaderboard tool; solidified C# and API calling skills; sharing resulting outputs with the online community on a regular basis.</li></ul>",
+                            "images" : [
+                                "assets\\images\\whal-int\\antisocial-media-example.png"
+                            ],
+                            "links" : {
                                 "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/WHAL-Int",
                                 "<i class=\"fa-regular fa-circle\"></i> Original Model": ""
                             }
@@ -211,10 +237,16 @@
                         "rotationSpeed" : -20,
                         "faceParent" : true,
                         "scale" : 0.015,
+                        "hitboxScale" : 0.2,
                         "info" : {
                             "title" : "World Conquest",
-                            "subtitle" : "Online replica of the \"Risk\" boardgame, built in Unity",
-                            "description" : "One of many projects I had to take on during my time at university was a group project to recreate the boardgame \"Risk\" as an online edition.<ul><li><b>Role / scope:</b> Lead Developer. Full-stack implementation (frontend & backend). Designed and built \"Attack Phase\", and fully integrating all game phases with one another. Timeframe: 3 months.</li><li><b>Technologies:</b> Unity (frontend), C# & Blender (backend)</li><li><b>Challenges:</b> The greatest challenge was integrating all phases together into a unified game. Each phase was designed and built by a different member of the team, leading to varying programming techniques, unexpected bugs, and often uncommented code. These difference and inconsistencies led to me needing to tweek and correct code from all phases of the game in order to get them to function together.</li><li><b>Outcome:</b> Final version of the game is able to take 4 human players through a full game of World Conquest. This project let me learn a lot about C#, as well as a base understanding of the Unity engine.</li></ul>",
+                            "subtitle" : "An online replica of the \"Risk\" boardgame, built in Unity",
+                            "description" : "One of many projects I had to take on during my time at university was a group project to recreate the boardgame \"Risk\" as an online edition.<ul><li><b>Role / scope:</b> Lead Developer. Full-stack implementation (frontend & backend). Designed and built \"Attack Phase\", and fully integrating all game phases with one another. Timeframe: 3 months.</li><li><b>Technologies:</b> Unity (frontend); C# & Blender (backend)</li><li><b>Challenges:</b> The greatest challenge was integrating all phases together into a unified game. Each phase was designed and built by a different member of the team, leading to varying programming techniques, unexpected bugs, and often uncommented code. These difference and inconsistencies led to me needing to tweek and correct code from all phases of the game in order to get them to function together.</li><li><b>Outcome:</b> Final version of the game is able to take 2-4 human players through a full game of World Conquest. This project let me learn a lot about C#, as well as a base understanding of the Unity engine.</li></ul>",
+                            "images" : [
+                                "assets\\images\\world-conquest\\home-screen.png",
+                                "assets\\images\\world-conquest\\player-selection.png",
+                                "assets\\images\\world-conquest\\game-screen_world-view.png"
+                            ],
                             "links": {
                                 "<i class=\"fa fa-github\"></i> Github": "https://github.com/AllTerrainWHALE/World-Conquest",
                                 "<i class=\"fa-regular fa-copyright\"></i> Model Credit": "https://skfb.ly/pBvWN"
