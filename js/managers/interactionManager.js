@@ -1,6 +1,7 @@
 import { solarSystem } from '../solarsys.js'
 import { sceneManager } from './sceneManager.js'
 import { cameraManager } from './cameraManager.js'
+import { getStyle } from '../helperFunctions.js'
 
 export class InteractionManager {
     constructor() {
@@ -14,13 +15,13 @@ export class InteractionManager {
         this.hoverInfoTitle = null
         this.hoverInfoSubTitle = null
 
-        this.followedInfoBox = null
-        this.followedInfoTitle = null
-        this.followedInfoSubTitle = null
-        this.followedInfoDescription = null
-        this.followedInfoLinksContainer = null
-        this.followedInfoCredit = null
-        this.followedInfoExpandBtn = null
+        this.pinnedInfoBox = null
+        this.pinnedInfoTitle = null
+        this.pinnedInfoSubTitle = null
+        this.pinnedInfoDescription = null
+        this.pinnedInfoLinksContainer = null
+        this.pinnedInfoCredit = null
+        this.pinnedInfoExpandBtn = null
 
         this.imageViewer = null;
         this.viewerImage = null;
@@ -40,52 +41,52 @@ export class InteractionManager {
         // -------------------< UI Elements >-------------------
         
         // Info box for hovering over object
-        this.hoverInfoBox = document.getElementById('celestial-info')
-            this.hoverInfoTitle = this.hoverInfoBox.querySelector('.info-title')
-            this.hoverInfoSubTitle = this.hoverInfoBox.querySelector('.info-subtitle')
+        this.hoverInfoBox = document.getElementById('hovered-container')
+            this.hoverInfoTitle = this.hoverInfoBox.querySelector('.container-title')
+            this.hoverInfoSubTitle = this.hoverInfoBox.querySelector('.container-subtitle')
 
         // Persistent info box for following object
-        this.followedInfoBox = document.getElementById('followed-info')
-            this.followedInfoTitle = this.followedInfoBox.querySelector('.info-title')
-            this.followedInfoSubTitle = this.followedInfoBox.querySelector('.info-subtitle')
-            this.followedInfoDescription = this.followedInfoBox.querySelector('.info-description')
-            this.followedInfoLinksContainer = this.followedInfoBox.querySelector('.info-links-container')
-            // this.followedInfoCredit = this.followedInfoBox.querySelector('.info-credit')
+        this.pinnedInfoBox = document.getElementById('pinned-container')
+            this.pinnedInfoTitle = this.pinnedInfoBox.querySelector('.container-title')
+            this.pinnedInfoSubTitle = this.pinnedInfoBox.querySelector('.container-subtitle')
+            this.pinnedInfoDescription = this.pinnedInfoBox.querySelector('.container-description')
+                // this.pinnedInfoDescription.class('visible')
+            this.pinnedInfoLinksContainer = this.pinnedInfoBox.querySelector('.link-container')
+            // this.pinnedInfoCredit = this.pinnedInfoBox.querySelector('.info-credit')
 
-            this.followedInfoAnimateBtn = this.followedInfoBox.querySelector('.info-button')
-            this.followedInfoExpandBtn = this.followedInfoBox.querySelector('.expand-button')
-            this.followedInfoBackBtn = this.followedInfoBox.querySelector('.back-button')
+            this.pinnedInfoAnimateBtn = document.getElementById('animate-button')
+            this.pinnedInfoImagesBtn = document.getElementById('images-button');
+            this.pinnedInfoExpandBtn = document.getElementById('expand-button')
+            this.pinnedInfoBackBtn = document.getElementById('back-button')
         
             // Buttons for persistent info box on following object
-            this.followedInfoAnimateBtn.addEventListener('click', () => {
+            this.pinnedInfoAnimateBtn.addEventListener('click', () => {
                 cameraManager.followedObject.playAnimation(cameraManager.followedObject.played)
                 if (cameraManager.followedObject.played) {
                     // console.log("Opening")
-                    this.followedInfoAnimateBtn.textContent = "Close"
+                    this.pinnedInfoAnimateBtn.textContent = "Close"
                 } else {
                     // console.log("Closing")
-                    this.followedInfoAnimateBtn.textContent = "Open"
+                    this.pinnedInfoAnimateBtn.textContent = "Open"
                 }
             })
-            this.followedInfoExpandBtn.addEventListener('click', () => {
-                if (cameraManager.followedObject.info.description && !this.followedInfoDescription.classList.contains('visible')) {
+            this.pinnedInfoExpandBtn.addEventListener('click', () => {
+                if (cameraManager.followedObject.info.description && !this.pinnedInfoDescription.classList.contains('visible')) {
                     // EXPAND DESCRIPTION
-                    // // console.log("Open")
-                    this.followedInfoDescription.classList.add('visible')
-                    this.followedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-up\"></i>"
+                    this.pinnedInfoDescription.classList.add('visible')
+                    this.pinnedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-up\"></i>"
                 } else {
                     // CLOSE DESCRIPTION
-                    // // console.log("Close")
-                    this.followedInfoDescription.classList.remove('visible')
-                    this.followedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-down\"></i>"
+                    this.pinnedInfoDescription.classList.remove('visible')
+                    this.pinnedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-down\"></i>"
                 }
+                this.resizeDescriptionBox()
             })
-            this.followedInfoBackBtn.addEventListener('click',
+            this.pinnedInfoBackBtn.addEventListener('click',
                 () => cameraManager.zoomToObject(cameraManager.followedObject.parent)
             )
 
         // Image viewer
-        this.followedInfoImagesBtn = this.followedInfoBox.querySelector('.images-button');
 
         this.imageViewer = document.getElementById('image-viewer');
             this.viewerImage = this.imageViewer.querySelector('.viewer-image');
@@ -93,7 +94,7 @@ export class InteractionManager {
             this.viewerPrev = this.imageViewer.querySelector('.prev');
             this.viewerNext = this.imageViewer.querySelector('.next');
 
-        this.followedInfoImagesBtn.addEventListener('click', () => this.openImageViewer());
+        this.pinnedInfoImagesBtn.addEventListener('click', () => this.openImageViewer());
 
         this.viewerClose.addEventListener('click', () => this.closeImageViewer());
         this.viewerPrev.addEventListener('click', () => this.showImage(this.currentImageIndex - 1));
@@ -110,7 +111,7 @@ export class InteractionManager {
 
         // Settings menu control
         this.settingsToggle = document.getElementById('settings-toggle')
-        this.settingsBox = document.getElementById('settings')
+        this.settingsBox = document.getElementById('settings-container')
             this.settingAmbientLight = sessionStorage.getItem('ambientLight') || 3
             this.settingAmbientValue = document.getElementById('ambient-value')
                 this.settingAmbientValue.textContent = this.settingAmbientLight
@@ -187,6 +188,8 @@ export class InteractionManager {
                 cameraManager.zoomToObject(cameraManager.followedObject.parent)
             }
         })
+
+        console.log("Interactions Manager Loaded")
     }
 
     update() {
@@ -196,7 +199,7 @@ export class InteractionManager {
             const vector = this.hoverInfoBox.value?.sphere.position.clone()
             vector.project(cameraManager.camera)
             var x = (vector.x * 0.5 + 0.5) * window.innerWidth
-            var y = (vector.y * -0.5 + 0.45) * window.innerHeight
+            var y = (vector.y * -0.5 + 0.5) * window.innerHeight
 
             // Get box dimensions
             const boxWidth = this.hoverInfoBox.offsetWidth
@@ -209,7 +212,7 @@ export class InteractionManager {
             window.innerWidth - boxWidth/2 - margin
             )
             y = Math.min(
-            Math.max(y, margin + boxHeight),
+            Math.max(y, margin + (boxHeight*1.3)),
             window.innerHeight - margin
             )
 
@@ -349,21 +352,53 @@ export class InteractionManager {
     }
 
 
+    resizeDescriptionBox() {
+        if (!this.pinnedInfoDescription.classList.contains('visible')) {
+            this.pinnedInfoDescription.style.maxHeight = `0px`
+            return
+        }
+
+        // Adjust the height of the description box based on pinned infobox content
+        const maxTotalHeight = getStyle(this.pinnedInfoBox, 'max-height')
+            ? parseFloat(getStyle(this.pinnedInfoBox, 'max-height'))
+            : window.innerHeight * 0.9 // Fallback to 90% of viewport height if max-height is not set
+        const titleHeight = this.pinnedInfoTitle.offsetHeight
+        const subTitleHeight = this.pinnedInfoSubTitle.offsetHeight
+        const linksHeight = this.pinnedInfoLinksContainer.offsetHeight
+        const buttonsHeight = 40 // Approximate height of buttons container
+        
+        // Get spacing values of all elements in the pinned infobox
+        const padding =
+            parseFloat(getStyle(this.pinnedInfoBox, 'padding-top')) +
+            parseFloat(getStyle(this.pinnedInfoBox, 'padding-bottom')) +
+            parseFloat(getStyle(this.pinnedInfoTitle, 'margin-bottom')) +
+            parseFloat(getStyle(this.pinnedInfoSubTitle, 'margin-bottom')) +
+            parseFloat(getStyle(this.pinnedInfoDescription, 'margin-bottom')) +
+            parseFloat(getStyle(this.pinnedInfoLinksContainer, 'margin-bottom'))
+
+        console.debug("Max total height:", maxTotalHeight)
+        console.debug("Title height:", titleHeight)
+        console.debug("Subtitle height:", subTitleHeight)
+        console.debug("Links height:", linksHeight)
+        console.debug("Buttons height:", buttonsHeight)
+        console.debug("Padding:", padding)
+
+        // Calculate available height for description when visible
+        const availableHeight = maxTotalHeight - (titleHeight + subTitleHeight + linksHeight + buttonsHeight + padding)
+        this.pinnedInfoDescription.style.maxHeight = `${availableHeight}px`
+        console.log("Resized description box to max height:", availableHeight)
+    }
+
+
     updateFocusFromUrl() {
         const urlFocusObj = window.location.href.split('#')[1]
-        // console.log(`URL focus object: ${urlFocusObj}`)
-
-        // console.log(`Objects count: ${solarSystem.objects.length}`)
         
         // Find focus object from URL
         if (urlFocusObj == null) {
-            // console.log("No focus object in URL, defaulting to Sun")
             cameraManager.followedObject = solarSystem.sun
         }
         else solarSystem.objects.forEach(obj => {
-            // console.log(`Checking object: ${obj.id}`)
             if (urlFocusObj === obj.id) {
-                // console.log(`Found object from URL: ${obj.name}`)
                 cameraManager.followedObject = obj
                 cameraManager.followedObject.playAnimation()
                 return
@@ -372,52 +407,56 @@ export class InteractionManager {
     }
 
     updateFollowedInfo() {
-        if (cameraManager.followedObject) { // && cameraManager.followedObject !== solarSystem.sun) {
-            this.followedInfoTitle.textContent = cameraManager.followedObject.info.title
-            this.followedInfoSubTitle.textContent = cameraManager.followedObject.info.subtitle
-            this.followedInfoDescription.innerHTML = cameraManager.followedObject.info.description
-            this.followedInfoLinksContainer.innerHTML = ""
+        if (cameraManager.followedObject) { //// && cameraManager.followedObject !== solarSystem.sun) {
+            // Update pinned info box content
+            this.pinnedInfoTitle.textContent = cameraManager.followedObject.info.title
+            this.pinnedInfoSubTitle.textContent = cameraManager.followedObject.info.subtitle
+            this.pinnedInfoDescription.innerHTML = cameraManager.followedObject.info.description
+            this.pinnedInfoLinksContainer.innerHTML = ""
             Object.entries(cameraManager.followedObject.info.links).forEach(([label,url]) => this.configureLink(label,url))
-            // if (cameraManager.followedObject.info.github !== null) {
-            //     this.followedInfoLinksContainer.href = cameraManager.followedObject.info.github
-            //     this.followedInfoLinksContainer.classList.add('visible')
-            // } else 
-            //     this.followedInfoLinksContainer.classList.remove('visible')
-
-            this.followedInfoBox.classList.add('visible')
             
+            // this.resizeDescriptionBox()
+
+            // Toggle visibility of pinned info box
+            this.pinnedInfoBox.classList.add('visible')
+            
+            // Enable back button if parent exists
             if (cameraManager.followedObject.parent != null)
-                this.followedInfoBackBtn.classList.add('visible')
+                this.pinnedInfoBackBtn.classList.add('visible')
             else
-                this.followedInfoBackBtn.classList.remove('visible')
+                this.pinnedInfoBackBtn.classList.remove('visible')
 
+            // Enable animation button if animations exist (length != 0)
             if (cameraManager.followedObject.animations.length) 
-                this.followedInfoAnimateBtn.classList.add('visible')
+                this.pinnedInfoAnimateBtn.classList.add('visible')
             else
-                this.followedInfoAnimateBtn.classList.remove('visible')
+                this.pinnedInfoAnimateBtn.classList.remove('visible')
 
+            // Update animation button text based on current state
             if (cameraManager.followedObject.played)
-                this.followedInfoAnimateBtn.textContent = "Close"
+                this.pinnedInfoAnimateBtn.textContent = "Close"
             else
-                this.followedInfoAnimateBtn.textContent = "Open"
+                this.pinnedInfoAnimateBtn.textContent = "Open"
 
+            // Enable images button if images exist (length != 0)
             const imgCount = cameraManager.followedObject.info.images.length
-            if (imgCount > 0){
-                this.followedInfoImagesBtn.classList.add('visible')
+            if (imgCount > 0) {
+                this.pinnedInfoImagesBtn.classList.add('visible')
                 if (imgCount == 1)
-                    this.followedInfoImagesBtn.textContent = "Image"
+                    this.pinnedInfoImagesBtn.textContent = "Image"
                 else
-                    this.followedInfoImagesBtn.textContent = "Images"
+                    this.pinnedInfoImagesBtn.textContent = "Images"
             }
             else
-                this.followedInfoImagesBtn.classList.remove('visible')
+                this.pinnedInfoImagesBtn.classList.remove('visible')
             
+            // Enable expand button if description exists
             if (cameraManager.followedObject.info.description)
-                this.followedInfoExpandBtn.classList.add('visible')
+                this.pinnedInfoExpandBtn.classList.add('visible')
             else
-                this.followedInfoExpandBtn.classList.remove('visible')
+                this.pinnedInfoExpandBtn.classList.remove('visible')
         } else {
-            this.followedInfoBox.classList.remove('visible')
+            this.pinnedInfoBox.classList.remove('visible')
         }
     }
 
@@ -426,7 +465,7 @@ export class InteractionManager {
         if (url != "")
         {
             element = document.createElement('a')
-            element.className = "info-link footer"
+            element.className = "link footer"
             element.href = url
             element.target = "_blank"
             element.rel = "noopener noreferrer"
@@ -435,11 +474,11 @@ export class InteractionManager {
         else
         {
             element = document.createElement('span')
-            element.className = "info-link footer"
+            element.className = "link footer"
             element.innerHTML = label
         }
 
-        this.followedInfoLinksContainer.appendChild(element)
+        this.pinnedInfoLinksContainer.appendChild(element)
     }
 }
 

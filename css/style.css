@@ -226,6 +226,9 @@ p {
         .followed-infobox button.visible {
             display: block
         }
+        .followed-infobox button.visible:hover {
+            box-shadow: 0 0 7px white;
+        }
 
 /* Info box styling */
 
@@ -259,7 +262,7 @@ p {
     /* display: none */
 }
     .info-description.visible {
-        max-height: calc(100vh - 17rem)
+        max-height: calc(100vh - 17rem);
     }
     .info-description p, h3, h4 {
         color:inherit;
@@ -273,16 +276,19 @@ p {
 
 .info-links-container {
     display: block;
+    /* overflow-x: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-colour) transparent; */
     /* gap: 0.5rem */
 }
-
     .info-links-container .info-link:not(:first-child) {
+        /* display: inline; */
         border-left: 2px solid #ffffff44;
         padding-left: 0.5rem;
     }
 
 .info-link {
-    display: inline-block;
+    display: inline;
     margin: 0.5rem 0.25rem;
     /* padding: 0 0.5rem; */
     /* color: var(--default-text-colour); */
@@ -371,7 +377,7 @@ p {
     max-width: 50%;
     opacity: 0;
     /* transform: translate(-20px,-20px); */
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease;
     pointer-events: none;
 }
   

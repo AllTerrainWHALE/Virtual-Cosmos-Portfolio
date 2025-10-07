@@ -1,0 +1,26 @@
+.image-viewer {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center; align-items: center;
+  /* transition: display 0.5s ease; */
+}
+    .image-viewer img.viewer-image {
+    max-width: 80%; max-height: 80%;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    }
+    .image-viewer .close {
+    position: absolute; top: 20px; right: 40px;
+    font-size: 40px; color: white; cursor: pointer;
+    }
+    .image-viewer .nav {
+    position: absolute; top: 50%;
+    font-size: 50px; color: white; cursor: pointer;
+    user-select: none;
+    }
+    .image-viewer .prev { left:5%; }
+    .image-viewer .next { right:5%; }

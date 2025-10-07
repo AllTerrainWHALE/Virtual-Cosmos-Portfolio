@@ -14,8 +14,8 @@
         "rotationSpeed" : 25,
 
         "info": {
-            "title" : "Bradley Hopper",
-            "subtitle" : "About Me",
+            "title" : "About Me",
+            "subtitle" : "",
             "description" : "<p>As a recent graduate from Sussex University, I'm a passionate software developer with an eagerness to push myself beyond my limits of understanding (and a side habit of building physics simulations). I strive to learn something new in every project I take on, whether it be small or massively complex, and love a challenging problem to solve.</p><p>My interest in programming started off being self taught through many, <i>many</i> personal projects. The joy I recieved from succeeding in these projects led me towards my university degree in Computer Science, specializing in Artifical Intelligence, resulting in a <b>1<sup>st</sup> class</b> grade.</p><h3>Technologies</h3><ul><li><b>Languages:</b> Python <i>(expert)</i>, C# <i>(advanced)</i>, JavaScript <i>(proficient)</i>, HTML/CSS <i>(proficient)</i>, Java <i>(proficient)</i></li><li><b>Frameworks:</b> PyTorch, NumPy, CUDA/Numba, .NET, RESTful, Node.js, Bootstrap</li><li><b>Developer Tools:</b> Git & GitHub, VS Code, Visual Studio, Unity, Blender, Google Sheets</li><li><b>Skills:</b> Project Management, Artificial Intelligence, Machine Learning, Back-end Development, Project Planning</li></ul>",
 
             "holding" : "<p>Over the years, I have ventured into using a variety of different tools for my projects:</p><ul><li><b>Python</b>, the language I was born in, is where I feel most comfortable. It is my go-to choice when starting up a new project, unless circumstances require otherwise.</li></ul>",

@@ -1,0 +1,18 @@
+#versionTag {
+    position: absolute;
+    top:0; right: 0;
+
+    margin: .5rem;
+    padding: .25rem .5rem;
+
+    color: cyan;
+    text-shadow: 0 0 5px black;
+    
+    background-color: rgba(100, 237, 255, 0.5);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    box-shadow: 0 0 10px cyan;
+}
+    #versionTag span {
+        color: inherit
+    }

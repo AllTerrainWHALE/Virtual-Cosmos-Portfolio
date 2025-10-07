@@ -67,7 +67,7 @@ export class CameraManager {
 
         
         interactionManager.hoverInfoBox.classList.remove('visible')
-        interactionManager.followedInfoBox.classList.remove('visible')
+        interactionManager.pinnedInfoBox.classList.remove('visible')
 
         const zoomDuration = isInitialZoom ? 2000 : 1000
 
@@ -94,6 +94,7 @@ export class CameraManager {
             window.history.pushState(null, '', `#${object.id}`);
             this.isZooming = false;
             interactionManager.updateFollowedInfo();
+            console.log(`Zoomed to ${this.followedObject.id}`)
         }, zoomDuration);
     }
 }
