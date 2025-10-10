@@ -21,9 +21,7 @@
             "holding" : "<p>Over the years, I have ventured into using a variety of different tools for my projects:</p><ul><li><b>Python</b>, the language I was born in, is where I feel most comfortable. It is my go-to choice when starting up a new project, unless circumstances require otherwise.</li></ul>",
 
             "links" : {
-                "<i class=\"fa-solid fa-location-dot\"></i> London, UK": "",
                 "<i class=\"fa-regular fa-envelope\"></i> bradleyhopper6@gmail.com": "mailto:bradleyhopper6@gmail.com",
-                "<i class=\"fa-solid fa-phone\"></i> +44 7769 515218": "tel:+447769515218",
                 "<i class=\"fa fa-github\"></i> AllTerrainWHALE": "https://github.com/AllTerrainWHALE",
                 "<i class=\"fab fa-linkedin-in\"></i> bradley-hopper": "https://linkedin.com/in/bradley-hopper",
                 "<i class=\"fa-solid fa-file-pdf\"></i> CV" : "assets\\documents\\BradleyHopperCV_25-09.pdf"

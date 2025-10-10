@@ -21,6 +21,7 @@ export class SceneManager {
 
         this.renderer = new THREE.WebGLRenderer()
         this.renderer.setSize(window.innerWidth, window.innerHeight)
+        this.renderer.domElement.id = "three-canvas"
         document.body.appendChild(this.renderer.domElement)
 
         // console.log(this.renderer)

@@ -7,7 +7,11 @@
     color: var(--text-colour);
 
     max-width: 70vw;
-    width: fit-content;
+    width: clamp(
+        20vw,
+        var(--pinned-container-width) + 10vw,
+        70vw
+    );
     
     padding: 1rem;
 
@@ -24,6 +28,9 @@
         opacity: 1;
         pointer-events: auto;
     }
+        .container.visible:hover {
+            box-shadow: 0 0 7px white;
+        }
 
     .container button {
         /* position: absolute; */
@@ -127,11 +134,14 @@
     }
 
 #hovered-container {
-    width: 50vw;
     transform: translate(-50%, -130%);
     pointer-events: none;
     z-index: 1000;
 }
+    #hovered-container.visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
 
 #pinned-container {
     position: absolute;
@@ -141,9 +151,9 @@
     max-height: 90vh;
 
     width: clamp(
-        calc(var(--pinned-container-width) * var(--min-scale)),
-        10vw + var(--pinned-container-width),
-        calc(var(--pinned-container-width) * var(--max-scale))
+        20vw,
+        var(--pinned-container-width) + 10vw,
+        70vw
     );
 
     margin: 1rem 1rem;

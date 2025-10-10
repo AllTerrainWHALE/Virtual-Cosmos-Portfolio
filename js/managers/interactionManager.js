@@ -252,7 +252,6 @@ export class InteractionManager {
                     // Update info box content
                     this.hoverInfoTitle.textContent = this.hoveredObject.info.title
                     this.hoverInfoSubTitle.textContent = this.hoveredObject.info.subtitle
-                    // this.hoverInfoDescription.innerHTML = this.hoveredObject.info.description
                     this.hoverInfoBox.value = this.hoveredObject
                     this.hoverInfoBox.classList.add('visible')
 

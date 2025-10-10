@@ -4,7 +4,7 @@
     --text-colour: #ffffff66;
 
     --min-scale: .1;
-    --max-scale: 2;
+    --max-scale: 1.75;
 
     --h1-base: 1.25rem;
     --h2-base: 1.125rem;
@@ -20,5 +20,5 @@
     --border-colour: #ffffff44;
 
     /** Container settings */
-    --pinned-container-width: 35rem;
+    --pinned-container-width: 25rem;
 }
