@@ -70,20 +70,40 @@
             /* text-shadow: 0 0 10px #fff; */
         }
 
-    .nav-item .dropdown-menu {
+    .nav-item.dropdown .dropdown-menu {
+        display: block;
+
         text-align: -webkit-left;
 
-        margin: 1vh 0vh;
+        margin: -1vh 0vh;
+
+        max-height: 0vh;
+        opacity: 0;
+        pointer-events: none;
+        
+        overflow-y: auto;
+        scrollbar-width: thin;
+        scrollbar-color: var(--border-colour) transparent;
 
         background-color: rgba(0, 0, 0, 0.9);
         border: 2px solid var(--border-colour);
         border-radius: 5px;
         /* box-shadow: 0 0 10px #fff; */
+
+        transition: all 0.5s ease;
+        transition-property: opacity, max-height, margin;
     }
-        .nav-item .dropdown-menu:hover{
+        .nav-item.dropdown .dropdown-menu.show {
+            margin: 1vh 0vh;
+            max-height: 50vh;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .nav-item.dropdown .dropdown-menu:hover {
             box-shadow: 0 0 7px white;
         }
         .nav-item .dropdown-menu .dropdown-item {
+            text-align: center;
             color: #ffffff;
             background-color: transparent;
             padding: 5vh auto;

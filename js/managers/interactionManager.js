@@ -47,19 +47,24 @@ export class InteractionManager {
 
         // Persistent info box for following object
         this.pinnedInfoBox = document.getElementById('pinned-container')
+            this.pinnedInfoCollapseBtn = document.getElementById('collapse-button')
             this.pinnedInfoTitle = this.pinnedInfoBox.querySelector('.container-title')
             this.pinnedInfoSubTitle = this.pinnedInfoBox.querySelector('.container-subtitle')
             this.pinnedInfoDescription = this.pinnedInfoBox.querySelector('.container-description')
                 // this.pinnedInfoDescription.class('visible')
             this.pinnedInfoLinksContainer = this.pinnedInfoBox.querySelector('.link-container')
             // this.pinnedInfoCredit = this.pinnedInfoBox.querySelector('.info-credit')
-
+            this.pinnedInfoDropdown = this.pinnedInfoBox.querySelector('.dropdown').querySelector('.dropdown-menu')
             this.pinnedInfoAnimateBtn = document.getElementById('animate-button')
             this.pinnedInfoImagesBtn = document.getElementById('images-button');
             this.pinnedInfoExpandBtn = document.getElementById('expand-button')
             this.pinnedInfoBackBtn = document.getElementById('back-button')
         
             // Buttons for persistent info box on following object
+            this.pinnedInfoCollapseBtn.addEventListener('click', () => {
+                this.pinnedInfoBox.classList.toggle('collapsed')
+                this.resizeDescriptionBox()
+            })
             this.pinnedInfoAnimateBtn.addEventListener('click', () => {
                 cameraManager.followedObject.playAnimation(cameraManager.followedObject.played)
                 if (cameraManager.followedObject.played) {
@@ -71,14 +76,16 @@ export class InteractionManager {
                 }
             })
             this.pinnedInfoExpandBtn.addEventListener('click', () => {
-                if (cameraManager.followedObject.info.description && !this.pinnedInfoDescription.classList.contains('visible')) {
+                if (cameraManager.followedObject.info.description && !this.pinnedInfoDescription.classList.contains('expanded')) {
                     // EXPAND DESCRIPTION
-                    this.pinnedInfoDescription.classList.add('visible')
-                    this.pinnedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-up\"></i>"
+                    this.pinnedInfoDescription.classList.add('expanded')
+                    this.pinnedInfoExpandBtn.getElementsByTagName('i')[0].style.transform = "rotate(180deg)"
+                    // this.pinnedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-up\"></i>"
                 } else {
                     // CLOSE DESCRIPTION
-                    this.pinnedInfoDescription.classList.remove('visible')
-                    this.pinnedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-down\"></i>"
+                    this.pinnedInfoDescription.classList.remove('expanded')
+                    this.pinnedInfoExpandBtn.getElementsByTagName('i')[0].style.transform = "rotate(0deg)"
+                    // this.pinnedInfoExpandBtn.innerHTML = "<i class=\"fa-solid fa-angle-down\"></i>"
                 }
                 this.resizeDescriptionBox()
             })
@@ -167,7 +174,7 @@ export class InteractionManager {
         // -------------------< Event Listeners >-------------------
         //// window.addEventListener("popstate", () => this.updateFocusFromUrl())
 
-        window.addEventListener('resize', () => this.onResize, false)
+        window.addEventListener('resize', () => this.onResize(), false)
 
         sceneManager.renderer.domElement.addEventListener('mousemove', (e) => this.onMouseMove(e))
         sceneManager.renderer.domElement.addEventListener('click', (e) => this.onObjectClick(e))
@@ -177,7 +184,7 @@ export class InteractionManager {
         
         window.addEventListener('hashchange', () => {
             const hash = window.location.hash.substring(1).toLowerCase()
-            const obj = solarSystem.objects.find(o => o.name.toLowerCase() === hash)
+            const obj = solarSystem.objects.find(o => o.id.toLowerCase() === hash)
             if (obj){
                 cameraManager.zoomToObject(obj)
             }
@@ -352,7 +359,7 @@ export class InteractionManager {
 
 
     resizeDescriptionBox() {
-        if (!this.pinnedInfoDescription.classList.contains('visible')) {
+        if (!this.pinnedInfoDescription.classList.contains('expanded') || this.pinnedInfoBox.classList.contains('collapsed')) {
             this.pinnedInfoDescription.style.maxHeight = `0px`
             return
         }
@@ -375,17 +382,17 @@ export class InteractionManager {
             parseFloat(getStyle(this.pinnedInfoDescription, 'margin-bottom')) +
             parseFloat(getStyle(this.pinnedInfoLinksContainer, 'margin-bottom'))
 
-        console.debug("Max total height:", maxTotalHeight)
-        console.debug("Title height:", titleHeight)
-        console.debug("Subtitle height:", subTitleHeight)
-        console.debug("Links height:", linksHeight)
-        console.debug("Buttons height:", buttonsHeight)
-        console.debug("Padding:", padding)
+        // console.debug("Max total height:", maxTotalHeight)
+        // console.debug("Title height:", titleHeight)
+        // console.debug("Subtitle height:", subTitleHeight)
+        // console.debug("Links height:", linksHeight)
+        // console.debug("Buttons height:", buttonsHeight)
+        // console.debug("Padding:", padding)
 
         // Calculate available height for description when visible
         const availableHeight = maxTotalHeight - (titleHeight + subTitleHeight + linksHeight + buttonsHeight + padding)
         this.pinnedInfoDescription.style.maxHeight = `${availableHeight}px`
-        console.log("Resized description box to max height:", availableHeight)
+        // console.log("Resized description box to max height:", availableHeight)
     }
 
 
@@ -407,6 +414,16 @@ export class InteractionManager {
 
     updateFollowedInfo() {
         if (cameraManager.followedObject) { //// && cameraManager.followedObject !== solarSystem.sun) {
+            
+            // Update satellite dropdown menu
+            this.pinnedInfoDropdown.innerHTML = ""
+            if (cameraManager.followedObject.satellites.length > 0) {
+                cameraManager.followedObject.satellites.forEach(sat => this.configureSatelliteDropdown(sat))
+                this.pinnedInfoDropdown.parentElement.classList.add('visible')
+            } else {
+                this.pinnedInfoDropdown.parentElement.classList.remove('visible')
+            }
+
             // Update pinned info box content
             this.pinnedInfoTitle.textContent = cameraManager.followedObject.info.title
             this.pinnedInfoSubTitle.textContent = cameraManager.followedObject.info.subtitle
@@ -414,8 +431,6 @@ export class InteractionManager {
             this.pinnedInfoLinksContainer.innerHTML = ""
             Object.entries(cameraManager.followedObject.info.links).forEach(([label,url]) => this.configureLink(label,url))
             
-            // this.resizeDescriptionBox()
-
             // Toggle visibility of pinned info box
             this.pinnedInfoBox.classList.add('visible')
             
@@ -478,6 +493,15 @@ export class InteractionManager {
         }
 
         this.pinnedInfoLinksContainer.appendChild(element)
+    }
+
+    configureSatelliteDropdown(object){
+        const element = document.createElement('a')
+        element.className = "dropdown-item"
+        element.href = `#${object.id}`
+        element.innerHTML = object.name
+
+        this.pinnedInfoDropdown.appendChild(element)
     }
 }
 

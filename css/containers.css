@@ -32,25 +32,44 @@
             box-shadow: 0 0 7px white;
         }
 
-    .container button {
-        /* position: absolute; */
+    .container .nav-item.dropdown {
         display: none;
+        position: absolute;
+
+        top: 0rem; right: 1rem;
+        transform: translateY(-50%);
+
+        padding: .1rem .4rem;
         
         background-color: rgb(0,0,0,0.8);
         color: #fff;
         
-        margin: 0rem 0rem;
-
         border: 2px solid var(--border-colour);
         border-radius: 5px;
-
-        pointer-events: auto;
+        
+        z-index: 10;
     }
-        .container button.visible {
-            display: block
+        .container .nav-item.dropdown.visible {
+            display: flex;
         }
-        .container button.visible:hover {
+        .container .nav-item.dropdown .nav-link.dropdown-toggle:hover {
+            background-color: transparent;
+            box-shadow: none;
+        }
+        .container .nav-item.dropdown:hover {
             box-shadow: 0 0 7px white;
+        }
+
+        .container .nav-item.dropdown .dropdown-menu {
+            display: flex;
+            
+            flex-direction: column;
+            align-items: flex-start;
+
+            top: 2rem; right: 0;
+            padding: .5rem 0;
+
+            width: min-content;
         }
 
     .container-title {
@@ -83,8 +102,37 @@
         transition: max-height 0.5s ease;
         /* display: none */
     }
-        .container-description.visible {
+        .container-description.expanded {
             max-height: 55vh;
+        }
+
+    .containter .button-container {
+        display: flex;
+
+        bottom: 0;
+        transform: translateY(-50%)
+    }
+
+    .container button {
+        display: none;
+        
+        background-color: rgb(0,0,0,0.8);
+        color: #fff;
+        
+        margin: 0rem 0rem;
+
+        border: 2px solid var(--border-colour);
+        border-radius: 5px;
+
+        transition: all 0.3s ease;
+
+        pointer-events: auto;
+    }
+        .container button.visible {
+            display: block
+        }
+        .container button.visible:hover {
+            box-shadow: 0 0 7px white;
         }
 
 .link-container {
@@ -145,7 +193,7 @@
 
 #pinned-container {
     position: absolute;
-    top: 7vh; right: 0;
+    top: 9vh; right: 0;
 
     /* max-width: 80vw; min-width: 9rem; */
     max-height: 90vh;
@@ -158,11 +206,39 @@
 
     margin: 1rem 1rem;
 
-    transition: opacity 0.3s ease;
+    transition: all 0.5s ease;
+    transition-property: opacity, transform;
 }
-    /* #pinned-container.visible {
-        pointer-events: auto;
-    } */
+    #pinned-container.collapsed {
+        transform: translateX(100%);
+    }
+
+    #pinned-container > #collapse-button {
+        position: absolute;
+
+        top: 50%; left: 0;
+        transform: translate(-50%,-50%);
+        
+        padding: 1rem .1rem;
+
+        background-color: rgba(0, 0, 0, .8);
+        border: 2px solid var(--border-colour);
+        border-radius: 5px;
+        
+        cursor: pointer;
+        z-index: 10;
+    }
+        #pinned-container > #collapse-button i {
+            transition: transform 0.5s ease;
+        }
+        #pinned-container.collapsed > #collapse-button i {
+            transform: rotate(180deg);
+        }
+
+    #pinned-container #expand-button > i {
+        transition: transform 0.5s ease;
+    }
+
 
 #settings-container {
     position: absolute;

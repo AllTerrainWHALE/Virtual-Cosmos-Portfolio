@@ -51,7 +51,7 @@
 
                 "satellites" : {
                     "virtual-cosmos-portfolio" : {
-                        "name" : "virtual-cosmos-portfolio",
+                        "name" : "Virtual Cosmos Portfolio",
                         "modelDir" : "assets\\models\\satellites\\sat_1.glb",
 
                         "color" : [160,160,160],
@@ -126,7 +126,7 @@
 
                 "satellites" : {
                     "basic-banking-machine" : {
-                        "name" : "basic-banking-machine",
+                        "name" : "Basic Banking Machine",
                         "modelDir" : "assets\\models\\satellites\\sputnik.glb",
                         "color" : [160,160,160],
                         "bodyRadius" : 0.2,
@@ -148,7 +148,7 @@
                         "satellites" : {}
                     },
                     "asc-network-generator" : {
-                        "name" : "asc-network-generator",
+                        "name" : "ACS Network Generator",
                         "modelDir" : "assets\\models\\satellites\\sat_2.glb",
                         "color" : [160,160,160],
                         "bodyRadius" : 0.2,
@@ -201,7 +201,7 @@
 
                 "satellites" : {
                     "whal-int" : {
-                        "name" : "whal-int",
+                        "name" : "WHAL-Int",
                         "modelDir" : "assets\\models\\satellites\\sat_3.glb",
                         "color" : [160,160,160],
                         "bodyRadius" : 0.2,

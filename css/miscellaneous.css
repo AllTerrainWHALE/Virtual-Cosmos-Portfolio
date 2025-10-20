@@ -1,6 +1,6 @@
 #versionTag {
     position: absolute;
-    bottom: 0; right: 0;
+    bottom: 0; left: 0;
 
     margin: .5rem;
     padding: 1vh 1vw;
