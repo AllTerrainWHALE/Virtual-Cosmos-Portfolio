@@ -6,7 +6,7 @@
 
     "sun" : {
         "name" : "Sun",
-        "modelDir" : "assets\\models\\sun.glb",
+        "modelDir" : "assets\\models\\2k_sun.glb",
         "color": [255,255,0],
         "bodyRadius": 15,
         "orbitRadius" : 0,
@@ -31,7 +31,7 @@
         "satellites" : {
             "mercury" : {
                 "name" : "Mercury",
-                "modelDir" : "assets\\models\\mercury.glb",
+                "modelDir" : "assets\\models\\2k_mercury.glb",
 
                 "color" : [160,160,160],
 
@@ -42,6 +42,8 @@
                 "orbitSpeed" : 8.264E-07,
 
                 "rotationSpeed" : 58.8,
+
+                "hitboxScale" : 2,
 
                 "info" : {
                     "title" : "JavaScript",
@@ -58,7 +60,7 @@
 
                         "scale": 0.05,
 
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.03,
                         "orbitSpeed" : 4E-07,
 
@@ -82,7 +84,7 @@
 
             "venus" : {
                 "name" : "Venus",
-                "modelDir" : "assets\\models\\venus.glb",
+                "modelDir" : "assets\\models\\2k_venus.glb",
 
                 "color" : [255,153,51],
 
@@ -106,7 +108,7 @@
             },
             "earth" : {
                 "name" : "Earth",
-                "modelDir" : "assets\\models\\earth.glb",
+                "modelDir" : "assets\\models\\2k_earth.glb",
 
                 "color" : [0,128,255],
 
@@ -129,12 +131,12 @@
                         "name" : "Basic Banking Machine",
                         "modelDir" : "assets\\models\\satellites\\sputnik.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.05,
                         "orbitSpeed" : 4E-07,
                         "rotationSpeed" : 1,
                         "faceParent" : false,
-                        "hitboxScale" : 0.5,
+                        "hitboxScale" : 1,
 
                         "info" : {
                             "title" : "Basic Banking Machine",
@@ -151,12 +153,13 @@
                         "name" : "ACS Network Generator",
                         "modelDir" : "assets\\models\\satellites\\sat_2.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.1,
                         "orbitSpeed" : 2E-07,
-                        "rotationSpeed" : -20,
+                        "rotationSpeed" : 0,
                         "faceParent" : true,
                         "scale" : 0.05,
+                        "hitboxScale" : 2,
                         "info" : {
                             "title" : "ACS Network Generator",
                             "subtitle" : "Using the behaviours of ants to simulate network generation",
@@ -181,7 +184,7 @@
 
             "mars" : {
                 "name" : "Mars",
-                "modelDir" : "assets\\models\\mars.glb",
+                "modelDir" : "assets\\models\\2k_mars.glb",
 
                 "color" : [193,68,14],
 
@@ -204,7 +207,7 @@
                         "name" : "WHAL-Int",
                         "modelDir" : "assets\\models\\satellites\\sat_3.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.03,
                         "orbitSpeed" : 2E-07,
                         "rotationSpeed" : -20,
@@ -229,13 +232,13 @@
                         "name" : "World Conquest",
                         "modelDir" : "assets\\models\\satellites\\low-polyish_satellite.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.1,
                         "orbitSpeed" : 9E-08,
                         "rotationSpeed" : -20,
                         "faceParent" : true,
                         "scale" : 0.015,
-                        "hitboxScale" : 0.2,
+                        "hitboxScale" : 0.5,
                         "info" : {
                             "title" : "World Conquest",
                             "subtitle" : "An online replica of the \"Risk\" boardgame, built in Unity",

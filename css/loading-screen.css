@@ -53,7 +53,7 @@
         }
 
         /* Hide the loading screen when content is loaded */
-        .loaded #loading-screen {
+        #loading-screen.loaded {
             opacity: 0;
             pointer-events: none;
         }

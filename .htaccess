@@ -14,7 +14,7 @@
   AddOutputFilterByType DEFLATE font/otf
   AddOutputFilterByType DEFLATE font/woff
   AddOutputFilterByType DEFLATE application/font-woff2
+  AddOutputFilterByType DEFLATE model/gltf-binary
+  AddOutputFilterByType DEFLATE image/png
+  AddOutputFilterByType DEFLATE image/jpg
 </IfModule>
-
-# Optionally disable compression for very small files or specific user agents
-# (you can add more logic if needed)
