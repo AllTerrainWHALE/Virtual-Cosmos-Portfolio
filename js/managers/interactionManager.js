@@ -201,12 +201,14 @@ export class InteractionManager {
 
     update() {
         if (this.hoveredObject || (this.infoPersist && this.hoverInfoBox.value)){
+            const windowWidth = Math.min(window.innerWidth, window.outerWidth)
+            const windowHeight = Math.min(window.innerHeight, window.outerHeight)
 
             // Get screen position
             const vector = this.hoverInfoBox.value?.sphere.position.clone()
             vector.project(cameraManager.camera)
-            var x = (vector.x * 0.5 + 0.5) * window.innerWidth
-            var y = (vector.y * -0.5 + 0.5) * window.innerHeight
+            var x = (vector.x * 0.5 + 0.5) * windowWidth
+            var y = (vector.y * -0.5 + 0.5) * windowHeight
 
             // Get box dimensions
             const boxWidth = this.hoverInfoBox.offsetWidth
@@ -216,11 +218,11 @@ export class InteractionManager {
             const margin = 10
             x = Math.min(
             Math.max(x, margin + boxWidth/2),
-            window.innerWidth - boxWidth/2 - margin
+            windowWidth - boxWidth/2 - margin
             )
             y = Math.min(
             Math.max(y, margin + (boxHeight*1.3)),
-            window.innerHeight - margin
+            windowHeight - margin
             )
 
             // Position info box
@@ -230,10 +232,13 @@ export class InteractionManager {
     }
 
     onMouseMove(event) {
+        const windowWidth = Math.min(window.innerWidth, window.outerWidth)
+        const windowHeight = Math.min(window.innerHeight, window.outerHeight)
+
         const rect = sceneManager.renderer.domElement.getBoundingClientRect()
         const mouse = new THREE.Vector2(
-            ((event.clientX - rect.left) / window.innerWidth) * 2 - 1,
-            -((event.clientY - rect.top) / window.innerHeight) * 2 + 1
+            ((event.clientX - rect.left) / windowWidth) * 2 - 1,
+            -((event.clientY - rect.top) / windowHeight) * 2 + 1
         )
 
         const raycaster = new THREE.Raycaster()
@@ -273,10 +278,13 @@ export class InteractionManager {
     }
 
     onResize() {
-        cameraManager.camera.aspect = window.innerWidth / window.innerHeight
+        const windowWidth = Math.min(window.innerWidth, window.outerWidth)
+        const windowHeight = Math.min(window.innerHeight, window.outerHeight)
+
+        cameraManager.camera.aspect = windowWidth / windowHeight
         cameraManager.camera.updateProjectionMatrix()
 
-        sceneManager.renderer.setSize(window.innerWidth, window.innerHeight)
+        sceneManager.renderer.setSize(windowWidth, windowHeight)
     }
 
     onObjectClick(event) {
@@ -292,10 +300,13 @@ export class InteractionManager {
     }
 
     onObjectDblClick(event) {
+        const windowWidth = Math.min(window.innerWidth, window.outerWidth)
+        const windowHeight = Math.min(window.innerHeight, window.outerHeight)
+
         const rect = sceneManager.renderer.domElement.getBoundingClientRect()
         const mouse = new THREE.Vector2(
-            ((event.clientX - rect.left) / window.innerWidth) * 2 - 1,
-            -((event.clientY - rect.top) / window.innerHeight) * 2 + 1
+            ((event.clientX - rect.left) / windowWidth) * 2 - 1,
+            -((event.clientY - rect.top) / windowHeight) * 2 + 1
         )
         const raycaster = new THREE.Raycaster()
         raycaster.setFromCamera(mouse, cameraManager.camera)
