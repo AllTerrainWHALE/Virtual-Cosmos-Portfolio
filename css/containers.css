@@ -226,7 +226,7 @@
         border-radius: 5px;
         
         cursor: pointer;
-        z-index: 10;
+        /* z-index: 10; */
     }
         #pinned-container > #collapse-button i {
             transition: transform 0.5s ease;
@@ -253,6 +253,8 @@
     /* transform: translate(0vh, 7vh); */
     transition: opacity 0.3s ease;
     pointer-events: none;
+
+    z-index: 1100;
 }
     #settings-container.visible {
         opacity: 1;
@@ -298,7 +300,7 @@
         padding: .5rem .5rem;
         top: 7vh; left: 0;
         cursor: pointer;
-        z-index: 1000;
+        z-index: 1100;
         /* transform: translate(0vh, 7vh); */
         transition: transform 0.3s ease;
     }
