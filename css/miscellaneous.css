@@ -1,22 +1,31 @@
 #versionTag {
     position: absolute;
-    bottom: 0; left: 0;
+    top: 0; left: 0;
 
-    margin: .5rem;
-    padding: 1vh 1vw;
+    margin: 0;
+    padding: 0vh 0vw;
+
+    width: 10rem;
 
     color: cyan;
     text-shadow: 0 0 5px black;
+    text-align: center;
     
-    background-color: rgba(100, 237, 255, 0.5);
+    background-color: rgba(100, 237, 255, 0.4);
     border: 1px solid transparent;
-    border-radius: 10px;
-    box-shadow: 0 0 10px cyan;
+    border-radius: 0px;
+    box-shadow: 0 0 10px rgba(0, 255, 255, .7);
+
+    transform-origin: left top;
+    transform: translate(-3rem, 4rem) rotate(-45deg);
+
+    opacity: 1;
 
     pointer-events: none;
 }
     #versionTag span {
-        color: inherit
+        color: inherit;
+        font-size: inherit;
     }
 
 #three-canvas {

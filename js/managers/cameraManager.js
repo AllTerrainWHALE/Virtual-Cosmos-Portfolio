@@ -58,22 +58,26 @@ export class CameraManager {
         if (this.isZooming || !object) return
         this.isZooming = true
 
+        // Load the object's model and its satellites' models in parallel to the zoom (if not already loaded)
         new Promise(async (resolve) => {
+            // Load main object
             object.loadModel()
             await object.loadingPromise
 
+            // Load satellites
             for (const sat of object.satellites) {
                 sat.loadModel()
                 await sat.loadingPromise
             }
+
+            // Load parent object if exists
+            if (object.parent) {
+                object.parent.loadModel()
+                await object.parent.loadingPromise   
+            }
             
             resolve()
         })
-        // object.loadModel()
-        // object.satellites.forEach(async (sat) => {
-        //     sat.loadModel()
-        //     await sat.loadingPromise
-        // })
 
         if (this.followedObject) {
             this.followedObject.isFocused = false
@@ -82,7 +86,6 @@ export class CameraManager {
 
         this.animUtil.cancelAllScaleAnimations()
 
-        
         interactionManager.hoverInfoBox.classList.remove('visible')
         interactionManager.pinnedInfoBox.classList.remove('visible')
 
