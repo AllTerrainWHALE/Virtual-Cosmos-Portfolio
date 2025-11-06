@@ -66,9 +66,10 @@ function initLoadingManager(totalAssets) {
     });
 
     loadingManager.onComplete(() => {
-        document.body.classList.add('loaded');
+        const loadingScreen = document.getElementById('loading-screen');
+        loadingScreen.classList.add('loaded');
         setTimeout(() => {
-            document.getElementById('loading-screen').style.display = 'none';
+            loadingScreen.style.display = 'none';
         }, 5000);
     });
 }

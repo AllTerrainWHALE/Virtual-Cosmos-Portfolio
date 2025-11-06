@@ -1,0 +1,24 @@
+:root {
+    /** Font sizings and colours */
+    --header-text-colour: white;
+    --text-colour: #ffffff66;
+
+    --min-scale: .1;
+    --max-scale: 1.75;
+
+    --h1-base: 1.25rem;
+    --h2-base: 1.125rem;
+    --h3-base: 1rem;
+    --h4-base: 0.83rem;
+    --h5-base: 0.67rem;
+    --h6-base: 0.50rem;
+
+    --text-base: 0.67rem;
+    --footer-base: 0.5rem;
+
+    /** Border colour */
+    --border-colour: #ffffff44;
+
+    /** Container settings */
+    --pinned-container-width: 25rem;
+}

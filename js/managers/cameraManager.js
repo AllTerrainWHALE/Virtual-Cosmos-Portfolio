@@ -58,6 +58,23 @@ export class CameraManager {
         if (this.isZooming || !object) return
         this.isZooming = true
 
+        new Promise(async (resolve) => {
+            object.loadModel()
+            await object.loadingPromise
+
+            for (const sat of object.satellites) {
+                sat.loadModel()
+                await sat.loadingPromise
+            }
+            
+            resolve()
+        })
+        // object.loadModel()
+        // object.satellites.forEach(async (sat) => {
+        //     sat.loadModel()
+        //     await sat.loadingPromise
+        // })
+
         if (this.followedObject) {
             this.followedObject.isFocused = false
             this.followedObject.playAnimation(true)
@@ -67,23 +84,23 @@ export class CameraManager {
 
         
         interactionManager.hoverInfoBox.classList.remove('visible')
-        interactionManager.followedInfoBox.classList.remove('visible')
+        interactionManager.pinnedInfoBox.classList.remove('visible')
 
         const zoomDuration = isInitialZoom ? 2000 : 1000
 
         if (this.followedObject) {
-            this.followedObject.satellites.forEach(sat => this.animUtil.animateScale(sat, 1, zoomDuration))
+            this.followedObject.satellites.forEach(sat => {
+                this.animUtil.animateScale(sat, 1, zoomDuration)
+                sat.inflated = false
+            })
         }
-        object.satellites.forEach(sat => this.animUtil.animateScale(sat, 2, zoomDuration))
+        object.satellites.forEach(sat => {
+            this.animUtil.animateScale(sat, 2, zoomDuration)
+            sat.inflated = true
+        })
 
         this.animUtil.animateZoom(object, zoomDuration)
         
-        // this.followedObject = object
-        // this.prevObjectPosition.copy(object.sphere.position)
-
-        // window.history.pushState(null, '', `#${object.id}`)
-        // this.isZooming = false
-        // interactionManager.updateFollowedInfo()
         // Wait for the zoom animation to complete before resetting the isZooming flag
         setTimeout(() => {
             this.followedObject = object;
@@ -94,6 +111,7 @@ export class CameraManager {
             window.history.pushState(null, '', `#${object.id}`);
             this.isZooming = false;
             interactionManager.updateFollowedInfo();
+            // console.log(`(${this.followedObject.id})\n\t%cZoomed to`, 'color: lightgreen; font-weight: bold;');
         }, zoomDuration);
     }
 }

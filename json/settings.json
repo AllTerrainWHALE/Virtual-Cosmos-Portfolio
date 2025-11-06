@@ -6,7 +6,7 @@
 
     "sun" : {
         "name" : "Sun",
-        "modelDir" : "assets\\models\\sun.glb",
+        "modelDir" : "assets\\models\\2k_sun.glb",
         "color": [255,255,0],
         "bodyRadius": 15,
         "orbitRadius" : 0,
@@ -14,16 +14,14 @@
         "rotationSpeed" : 25,
 
         "info": {
-            "title" : "Bradley Hopper",
-            "subtitle" : "About Me",
+            "title" : "About Me",
+            "subtitle" : "",
             "description" : "<p>As a recent graduate from Sussex University, I'm a passionate software developer with an eagerness to push myself beyond my limits of understanding (and a side habit of building physics simulations). I strive to learn something new in every project I take on, whether it be small or massively complex, and love a challenging problem to solve.</p><p>My interest in programming started off being self taught through many, <i>many</i> personal projects. The joy I recieved from succeeding in these projects led me towards my university degree in Computer Science, specializing in Artifical Intelligence, resulting in a <b>1<sup>st</sup> class</b> grade.</p><h3>Technologies</h3><ul><li><b>Languages:</b> Python <i>(expert)</i>, C# <i>(advanced)</i>, JavaScript <i>(proficient)</i>, HTML/CSS <i>(proficient)</i>, Java <i>(proficient)</i></li><li><b>Frameworks:</b> PyTorch, NumPy, CUDA/Numba, .NET, RESTful, Node.js, Bootstrap</li><li><b>Developer Tools:</b> Git & GitHub, VS Code, Visual Studio, Unity, Blender, Google Sheets</li><li><b>Skills:</b> Project Management, Artificial Intelligence, Machine Learning, Back-end Development, Project Planning</li></ul>",
 
             "holding" : "<p>Over the years, I have ventured into using a variety of different tools for my projects:</p><ul><li><b>Python</b>, the language I was born in, is where I feel most comfortable. It is my go-to choice when starting up a new project, unless circumstances require otherwise.</li></ul>",
 
             "links" : {
-                "<i class=\"fa-solid fa-location-dot\"></i> London, UK": "",
                 "<i class=\"fa-regular fa-envelope\"></i> bradleyhopper6@gmail.com": "mailto:bradleyhopper6@gmail.com",
-                "<i class=\"fa-solid fa-phone\"></i> +44 7769 515218": "tel:+447769515218",
                 "<i class=\"fa fa-github\"></i> AllTerrainWHALE": "https://github.com/AllTerrainWHALE",
                 "<i class=\"fab fa-linkedin-in\"></i> bradley-hopper": "https://linkedin.com/in/bradley-hopper",
                 "<i class=\"fa-solid fa-file-pdf\"></i> CV" : "assets\\documents\\BradleyHopperCV_25-09.pdf"
@@ -33,7 +31,7 @@
         "satellites" : {
             "mercury" : {
                 "name" : "Mercury",
-                "modelDir" : "assets\\models\\mercury.glb",
+                "modelDir" : "assets\\models\\2k_mercury.glb",
 
                 "color" : [160,160,160],
 
@@ -45,6 +43,8 @@
 
                 "rotationSpeed" : 58.8,
 
+                "hitboxScale" : 2,
+
                 "info" : {
                     "title" : "JavaScript",
                     "subtitle" : "Mercury",
@@ -53,14 +53,14 @@
 
                 "satellites" : {
                     "virtual-cosmos-portfolio" : {
-                        "name" : "virtual-cosmos-portfolio",
+                        "name" : "Virtual Cosmos Portfolio",
                         "modelDir" : "assets\\models\\satellites\\sat_1.glb",
 
                         "color" : [160,160,160],
 
                         "scale": 0.05,
 
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.03,
                         "orbitSpeed" : 4E-07,
 
@@ -84,7 +84,7 @@
 
             "venus" : {
                 "name" : "Venus",
-                "modelDir" : "assets\\models\\venus.glb",
+                "modelDir" : "assets\\models\\2k_venus.glb",
 
                 "color" : [255,153,51],
 
@@ -108,7 +108,7 @@
             },
             "earth" : {
                 "name" : "Earth",
-                "modelDir" : "assets\\models\\earth.glb",
+                "modelDir" : "assets\\models\\2k_earth.glb",
 
                 "color" : [0,128,255],
 
@@ -128,15 +128,15 @@
 
                 "satellites" : {
                     "basic-banking-machine" : {
-                        "name" : "basic-banking-machine",
+                        "name" : "Basic Banking Machine",
                         "modelDir" : "assets\\models\\satellites\\sputnik.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.05,
                         "orbitSpeed" : 4E-07,
                         "rotationSpeed" : 1,
                         "faceParent" : false,
-                        "hitboxScale" : 0.5,
+                        "hitboxScale" : 1,
 
                         "info" : {
                             "title" : "Basic Banking Machine",
@@ -150,15 +150,16 @@
                         "satellites" : {}
                     },
                     "asc-network-generator" : {
-                        "name" : "asc-network-generator",
+                        "name" : "ACS Network Generator",
                         "modelDir" : "assets\\models\\satellites\\sat_2.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.1,
                         "orbitSpeed" : 2E-07,
-                        "rotationSpeed" : -20,
+                        "rotationSpeed" : 0,
                         "faceParent" : true,
                         "scale" : 0.05,
+                        "hitboxScale" : 2,
                         "info" : {
                             "title" : "ACS Network Generator",
                             "subtitle" : "Using the behaviours of ants to simulate network generation",
@@ -183,7 +184,7 @@
 
             "mars" : {
                 "name" : "Mars",
-                "modelDir" : "assets\\models\\mars.glb",
+                "modelDir" : "assets\\models\\2k_mars.glb",
 
                 "color" : [193,68,14],
 
@@ -203,10 +204,10 @@
 
                 "satellites" : {
                     "whal-int" : {
-                        "name" : "whal-int",
+                        "name" : "WHAL-Int",
                         "modelDir" : "assets\\models\\satellites\\sat_3.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.03,
                         "orbitSpeed" : 2E-07,
                         "rotationSpeed" : -20,
@@ -231,13 +232,13 @@
                         "name" : "World Conquest",
                         "modelDir" : "assets\\models\\satellites\\low-polyish_satellite.glb",
                         "color" : [160,160,160],
-                        "bodyRadius" : 0.2,
+                        "bodyRadius" : 1,
                         "orbitRadius" : 0.1,
                         "orbitSpeed" : 9E-08,
                         "rotationSpeed" : -20,
                         "faceParent" : true,
                         "scale" : 0.015,
-                        "hitboxScale" : 0.2,
+                        "hitboxScale" : 0.5,
                         "info" : {
                             "title" : "World Conquest",
                             "subtitle" : "An online replica of the \"Risk\" boardgame, built in Unity",

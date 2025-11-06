@@ -1,0 +1,72 @@
+h1 { font-size: clamp( 
+    calc(var(--h1-base) * var(--min-scale)), /* min */
+    1vw + var(--h1-base), /* ideal */
+    calc(var(--h1-base) * var(--max-scale)) /* max */
+); }
+
+h2 { font-size: clamp(
+    calc(var(--h2-base) * var(--min-scale)),
+    .9vw + var(--h2-base),
+    calc(var(--h2-base) * var(--max-scale))
+); }
+
+h3 { font-size: clamp(
+    calc(var(--h3-base) * var(--min-scale)),
+    .8vw + var(--h3-base),
+    calc(var(--h3-base) * var(--max-scale))
+); }
+
+h4 { font-size: clamp(
+    calc(var(--h4-base) * var(--min-scale)),
+    .7vw + var(--h4-base),
+    calc(var(--h4-base) * var(--max-scale))
+); }
+
+h5 { font-size: clamp(
+    calc(var(--h5-base) * var(--min-scale)),
+    .6vw + var(--h5-base),
+    calc(var(--h5-base) * var(--max-scale))
+); }
+
+h6 { font-size: clamp(
+    calc(var(--h5-base) * var(--min-scale)),
+    .5vw + var(--h5-base),
+    calc(var(--h5-base) * var(--max-scale))
+); }
+
+p, ul, ol, span, a {
+    font-size: clamp(
+        calc(var(--text-base) * var(--min-scale)),
+        .6vw + var(--text-base),
+        calc(var(--text-base) * var(--max-scale))
+    )
+}
+
+.footer {
+    font-size: clamp(
+        calc(var(--footer-base) * var(--min-scale)),
+        .5vw + var(--footer-base),
+        calc(var(--footer-base) * var(--max-scale))
+    )
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Oswald', sans-serif;
+    color: var(--text-colour);
+}
+    h1 {
+        color: var(--header-text-colour)
+    }
+
+p, ul, ol, span {
+	font-family: 'Open Sans', sans-serif;
+    color: var(--text-colour);
+}
+
+ul, ol {
+    padding-left: clamp(
+        calc(1rem * var(--min-scale)),
+        .5vh + 2rem,
+        calc(2rem * var(--max-scale))
+    )
+}

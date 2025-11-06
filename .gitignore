@@ -166,6 +166,7 @@ cython_debug/
 **/*backup*
 *.zip
 *.txt
+.har/
 
 assets/images/unused/
 css/stylesheet.css

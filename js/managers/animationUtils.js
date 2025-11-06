@@ -19,9 +19,9 @@ export class AnimationUtils {
 
             const objPos = object.sphere.position.clone()
             const endPos = new THREE.Vector3().copy(objPos).add(new THREE.Vector3(
-                object.bodyRadius * 7,
-                object.bodyRadius * 7,
-                object.bodyRadius * 7
+                object.modelRadius * 2 * object.hitboxScale,
+                object.modelRadius * 2 * object.hitboxScale,
+                object.modelRadius * 2 * object.hitboxScale
             ))
 
             camera.position.lerpVectors(initialPos, endPos, t)
