@@ -1,11 +1,9 @@
 #versionTag {
     position: absolute;
-    top: 0; left: 0;
+    bottom: 0; left: 0;
 
-    margin: 0;
-    padding: 0vh 0vw;
-
-    width: 10rem;
+    margin: .5rem;
+    padding: 1vh 1vw;
 
     color: cyan;
     text-shadow: 0 0 5px black;
@@ -13,19 +11,35 @@
     
     background-color: rgba(100, 237, 255, 0.4);
     border: 1px solid transparent;
-    border-radius: 0px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 255, 255, .7);
 
-    transform-origin: left top;
-    transform: translate(-3rem, 4rem) rotate(-45deg);
-
-    opacity: 1;
-
     pointer-events: none;
+    opacity: 1;
 }
     #versionTag span {
         color: inherit;
         font-size: inherit;
+    }
+
+#versionTagClipper {
+    position: absolute;
+    top: 0; left: 0;
+
+    width: 15%; height: 100%;
+    overflow: hidden;
+}
+    .navbar #versionTagClipper #versionTag {
+        position: absolute;
+        top: 0; left: 0; bottom: auto;
+
+        margin: 0;
+        padding: 0vh 0vw;
+
+        width: 10rem;
+
+        transform-origin: left top;
+        transform: translate(-3rem, 4rem) rotate(-45deg);
     }
 
 #three-canvas {
